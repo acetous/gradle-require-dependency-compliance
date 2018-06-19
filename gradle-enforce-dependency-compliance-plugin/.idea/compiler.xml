@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="child-one_main" target="1.8" />
+      <module name="child-one_test" target="1.8" />
+      <module name="submodule-parent_main" target="1.8" />
+      <module name="submodule-parent_test" target="1.8" />
+      <module name="subparent-child-one_main" target="1.8" />
+      <module name="subparent-child-one_test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

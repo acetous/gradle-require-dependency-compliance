@@ -1,0 +1,24 @@
+buildscript {
+    dependencies {
+        classpath 'de.acetous:gradle-enforce-dependency-compliance-plugin:1.0-SNAPSHOT'
+    }
+}
+apply plugin: 'de.acetous.dependency-compliance'
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile(
+            'org.springframework:spring-context-support:5.0.7.RELEASE',
+    )
+}
+
+dependencyCompliance {
+    outputFiles = layout.files('result.txt')
+}

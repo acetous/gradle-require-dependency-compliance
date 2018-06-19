@@ -10,5 +10,6 @@ public class DependencyCompliancePlugin implements Plugin<Project> {
         project.getTasks().create("dependencyComplianceWrite", DependencyWriterTask.class, (task) -> {
             task.setOutputFiles(extension.getOutputFiles());
         });
+        project.getTasks().create("dependencyComplianceList", DependencyListTask.class);
     }
 }

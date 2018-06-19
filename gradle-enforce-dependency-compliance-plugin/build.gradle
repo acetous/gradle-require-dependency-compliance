@@ -1,7 +1,6 @@
 plugins {
     id 'java'
     id 'java-gradle-plugin'
-    id 'maven-publish'
 }
 
 sourceCompatibility = 1.8
@@ -29,11 +28,4 @@ dependencies {
             'commons-io:commons-io:2.4',
             'org.assertj:assertj-core:3.10.0',
     )
-}
-
-publishing {
-    repositories {
-        maven {
-        }
-    }
 }
