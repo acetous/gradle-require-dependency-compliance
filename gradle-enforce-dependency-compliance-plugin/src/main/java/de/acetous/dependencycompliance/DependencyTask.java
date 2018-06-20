@@ -5,15 +5,22 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ModuleVersionIdentifier;
 import org.gradle.api.artifacts.ResolvedArtifact;
+import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.ArtifactRepository;
 import org.gradle.api.initialization.dsl.ScriptHandler;
 
+import java.nio.charset.Charset;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public abstract class DependencyTask extends DefaultTask {
 
-    void resolveDependencies(Consumer<? super ModuleVersionIdentifier> dependencyConsumer) {
+    public static final Charset CHARSET = Charset.forName("UTF-8");
+
+    protected List<ModuleVersionIdentifier> resolveDependencies() {
+        Set<ResolvedArtifact> allArtifacts = new HashSet<>();
         for (Project project : getProject().getAllprojects()) {
             String configurationName = "runtime";
             Configuration configuration = project.getConfigurations().findByName(configurationName);
@@ -22,26 +29,35 @@ public abstract class DependencyTask extends DefaultTask {
                 continue;
             }
             Set<ResolvedArtifact> artifacts = configuration.getResolvedConfiguration().getResolvedArtifacts();
-            artifacts.stream().map(resolvedArtifact -> resolvedArtifact.getModuleVersion().getId()).forEach(dependencyConsumer);
+            allArtifacts.addAll(artifacts);
         }
+        return allArtifacts.stream().map(resolvedArtifact -> resolvedArtifact.getModuleVersion().getId()).collect(Collectors.toList());
     }
 
-    void resolveBuildDependencies(Consumer<? super ModuleVersionIdentifier> buildDependencyConsumer) {
+    protected List<ModuleVersionIdentifier> resolveBuildDependencies() {
+        Set<ResolvedArtifact> allArtifacts = new HashSet<>();
         for (Project project : getProject().getAllprojects()) {
             Set<ResolvedArtifact> artifacts = project.getBuildscript().getConfigurations().getByName(ScriptHandler.CLASSPATH_CONFIGURATION).getResolvedConfiguration().getResolvedArtifacts();
-            artifacts.stream().map(resolvedArtifact -> resolvedArtifact.getModuleVersion().getId()).forEach(buildDependencyConsumer);
+            allArtifacts.addAll(artifacts);
         }
+        return allArtifacts.stream().map(resolvedArtifact -> resolvedArtifact.getModuleVersion().getId()).collect(Collectors.toList());
     }
 
-    void resolveRepositories(Consumer<? super ArtifactRepository> repositoryConsumer) {
+    protected Set<ArtifactRepository> resolveRepositories() {
+        Set<ArtifactRepository> allRepositories = new HashSet<>();
         for (Project project : getProject().getAllprojects()) {
-            project.getRepositories().stream().forEach(repositoryConsumer);
+            RepositoryHandler repositories = project.getRepositories();
+            allRepositories.addAll(repositories);
         }
+        return allRepositories;
     }
 
-    void resolveBuildRepositories(Consumer<? super ArtifactRepository> repositoryConsumer) {
+    protected Set<ArtifactRepository> resolveBuildRepositories() {
+        Set<ArtifactRepository> allRepositories = new HashSet<>();
         for (Project project : getProject().getAllprojects()) {
-            project.getBuildscript().getRepositories().stream().forEach(repositoryConsumer);
+            RepositoryHandler repositories = project.getBuildscript().getRepositories();
+            allRepositories.addAll(repositories);
         }
+        return allRepositories;
     }
 }

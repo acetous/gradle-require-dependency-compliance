@@ -3,20 +3,21 @@ package de.acetous.dependencycompliance;
 import org.gradle.api.Project;
 import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.file.RegularFileProperty;
 
 public class DependencyComplianceExtension {
 
-    private final ConfigurableFileCollection outputFiles;
+    private final RegularFileProperty outputFile;
 
     public DependencyComplianceExtension(Project project) {
-        outputFiles = project.getLayout().configurableFiles();
+        outputFile = project.getLayout().fileProperty();
     }
 
-    public void setOutputFiles(FileCollection outputFiles) {
-        this.outputFiles.setFrom(outputFiles);
+    public void setOutputFile(RegularFileProperty outputFile) {
+        this.outputFile.set(outputFile);
     }
 
-    public ConfigurableFileCollection getOutputFiles() {
-        return outputFiles;
+    public RegularFileProperty getOutputFile() {
+        return outputFile;
     }
 }

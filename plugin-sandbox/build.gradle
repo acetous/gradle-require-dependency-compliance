@@ -1,4 +1,7 @@
 buildscript {
+    repositories {
+        jcenter()
+    }
     dependencies {
         classpath 'de.acetous:gradle-enforce-dependency-compliance-plugin:1.0-SNAPSHOT'
     }
@@ -16,9 +19,10 @@ repositories {
 dependencies {
     compile(
             'org.springframework:spring-context-support:5.0.7.RELEASE',
+            'org.apache.wicket:wicket:8.0.0',
     )
 }
 
 dependencyCompliance {
-    outputFiles = layout.files('result.txt')
+    outputFile = file('result.json')
 }

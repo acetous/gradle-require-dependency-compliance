@@ -15,7 +15,8 @@ repositories {
 }
 
 dependencies {
-    runtime (
+    compile (
             'com.google.code.gson:gson:2.8.5',
+            'org.apache.cxf:cxf-rt-rs:3.2.4',
     )
 }

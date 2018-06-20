@@ -11,29 +11,15 @@ import java.util.function.Consumer;
 
 public class DependencyListTask extends DependencyTask {
 
-    private final ConfigurableFileCollection outputFiles = getProject().getLayout().configurableFiles();
-
-    public void setOutputFiles(FileCollection outputFiles) {
-        this.outputFiles.setFrom(outputFiles);
-    }
-
     @TaskAction
-    void writeDependencies() {
-        Consumer<ModuleVersionIdentifier> dependencyConsumer = moduleVersionIdentifier -> {
-            getLogger().lifecycle(moduleVersionIdentifier.toString());
-        };
+    void listDependencies() {
 
-        getLogger().lifecycle("-----------------------------------------");
-        getLogger().lifecycle("Runtime dependencies:");
-        getLogger().lifecycle("-----------------------------------------");
-        resolveDependencies(dependencyConsumer);
-        getLogger().lifecycle("-----------------------------------------\n");
+        logHeading("Runtime dependencies:");
+        resolveDependencies().stream().forEach(moduleVersionIdentifier -> getLogger().lifecycle(moduleVersionIdentifier.toString()));
 
-        getLogger().lifecycle("-----------------------------------------");
-        getLogger().lifecycle("Buildscript dependencies:");
-        getLogger().lifecycle("-----------------------------------------");
-        resolveBuildDependencies(dependencyConsumer);
-        getLogger().lifecycle("-----------------------------------------\n");
+        logHeading("Buildscript dependencies:");
+        resolveBuildDependencies().stream().forEach(moduleVersionIdentifier -> getLogger().lifecycle(moduleVersionIdentifier.toString()));
+
 
         Consumer<ArtifactRepository> artifactRepositoryConsumer = artifactRepository -> {
             if (artifactRepository instanceof MavenArtifactRepository) {
@@ -45,17 +31,17 @@ public class DependencyListTask extends DependencyTask {
 
         };
 
-        getLogger().lifecycle("-----------------------------------------");
-        getLogger().lifecycle("Build repositories:");
-        getLogger().lifecycle("-----------------------------------------");
-        resolveRepositories(artifactRepositoryConsumer);
-        getLogger().lifecycle("-----------------------------------------\n");
+        logHeading("Build repositories:");
+        resolveRepositories().stream().forEach(artifactRepositoryConsumer);
 
+        logHeading("Buildscript repositories:");
+        resolveBuildRepositories().stream().forEach(artifactRepositoryConsumer);
+    }
+
+    private void logHeading(String heading) {
         getLogger().lifecycle("-----------------------------------------");
-        getLogger().lifecycle("Buildscript repositories:");
+        getLogger().lifecycle(heading);
         getLogger().lifecycle("-----------------------------------------");
-        resolveBuildRepositories(artifactRepositoryConsumer);
-        getLogger().lifecycle("-----------------------------------------\n");
     }
 
 }
