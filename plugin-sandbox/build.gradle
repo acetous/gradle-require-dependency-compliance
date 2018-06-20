@@ -17,12 +17,8 @@ repositories {
 }
 
 dependencies {
-    compile(
-            'org.springframework:spring-context-support:5.0.7.RELEASE',
-            'org.apache.wicket:wicket:8.0.0',
-    )
 }
 
 dependencyCompliance {
-    outputFile = file('result.json')
+    outputFile = file('dependency-compliance-report.json')
 }
