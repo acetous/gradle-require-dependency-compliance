@@ -25,7 +25,7 @@ public abstract class DependencyTask extends DefaultTask {
             String configurationName = "runtime";
             Configuration configuration = project.getConfigurations().findByName(configurationName);
             if (configuration == null) {
-                project.getLogger().warn(String.format("Configuration '%s' not found for project '%s'.", configurationName, project.getPath()));
+                project.getLogger().info(String.format("Configuration '%s' not found for project '%s'.", configurationName, project.getPath()));
                 continue;
             }
             Set<ResolvedArtifact> artifacts = configuration.getResolvedConfiguration().getResolvedArtifacts();

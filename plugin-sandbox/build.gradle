@@ -4,6 +4,7 @@ buildscript {
     }
     dependencies {
         classpath 'de.acetous:gradle-enforce-dependency-compliance-plugin:1.0-SNAPSHOT'
+        classpath 'commons-lang:commons-lang:2.6'
     }
 }
 apply plugin: 'de.acetous.dependency-compliance'
@@ -13,7 +14,6 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-    jcenter()
 }
 
 dependencies {

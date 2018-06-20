@@ -1,12 +1,42 @@
 {
   "dependencies": [
     {
-      "group": "org.apache.commons",
-      "name": "commons-lang3",
-      "version": "3.7"
+      "group": "org.springframework",
+      "name": "spring-core",
+      "version": "5.0.7.RELEASE"
+    },
+    {
+      "group": "org.springframework",
+      "name": "spring-context",
+      "version": "5.0.7.RELEASE"
+    },
+    {
+      "group": "org.springframework",
+      "name": "spring-jcl",
+      "version": "5.0.7.RELEASE"
+    },
+    {
+      "group": "org.springframework",
+      "name": "spring-expression",
+      "version": "5.0.7.RELEASE"
+    },
+    {
+      "group": "org.springframework",
+      "name": "spring-beans",
+      "version": "5.0.7.RELEASE"
+    },
+    {
+      "group": "org.springframework",
+      "name": "spring-aop",
+      "version": "5.0.7.RELEASE"
     }
   ],
   "buildDependencies": [
+    {
+      "group": "commons-lang",
+      "name": "commons-lang",
+      "version": "2.6"
+    },
     {
       "group": "com.google.code.gson",
       "name": "gson",
@@ -22,10 +52,6 @@
     {
       "name": "MavenRepo",
       "url": "https://repo.maven.apache.org/maven2/"
-    },
-    {
-      "name": "BintrayJCenter",
-      "url": "https://jcenter.bintray.com/"
     }
   ],
   "buildRepositories": [
