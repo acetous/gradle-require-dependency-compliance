@@ -18,7 +18,3 @@ repositories {
 
 dependencies {
 }
-
-dependencyCompliance {
-    outputFile = file('my-report.json')
-}
