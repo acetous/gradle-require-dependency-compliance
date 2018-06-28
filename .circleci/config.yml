@@ -1,0 +1,25 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    environment:
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "gradle-require-dependency-compliance-plugin/build.gradle" }}
+          - v1-dependencies-
+      - run: 
+        command: gradlew dependencies
+        working_directory: gradle-require-dependency-compliance-plugin
+      - save_cache:
+          paths:
+            - ~/.gradlew
+          key: v1-dependencies-{{ checksum "gradle-require-dependency-compliance-plugin/build.gradle" }}
+      - run: 
+        command: gradlew test
+        working_directory: gradle-require-dependency-compliance-plugin
