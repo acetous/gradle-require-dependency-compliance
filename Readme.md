@@ -4,11 +4,11 @@
 
 This repository contains the plugin and a sanbox project for manual tests when editing the plugin.
 
-### ./gradle-enforce-dependency-compliance-plugin
+### ./gradle-require-dependency-compliance-plugin
 
 This is the actual plugin. Run some integration tests via:
 ```
-> cd gradle-enforce-dependency-compliance-plugin
+> cd gradle-require-dependency-compliance-plugin
 > gradlew check
 ```
 
