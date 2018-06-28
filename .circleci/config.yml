@@ -14,7 +14,7 @@ jobs:
           - v1-dependencies-{{ checksum "gradle-require-dependency-compliance-plugin/build.gradle" }}
           - v1-dependencies-
       - run: 
-          command: ./gradlew dependencies
+          command: ./gradlew resolveDependencies
           working_directory: gradle-require-dependency-compliance-plugin
       - save_cache:
           paths:
