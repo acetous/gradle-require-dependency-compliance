@@ -1,5 +1,7 @@
 # de.acetous.dependency-compliance
 
+[![CircleCI](https://circleci.com/gh/acetous/gradle-require-dependency-compliance/tree/master.svg?style=svg)](https://circleci.com/gh/acetous/gradle-require-dependency-compliance/tree/master)
+
 ## Repository structure
 
 This repository contains the plugin and a sanbox project for manual tests when editing the plugin.
