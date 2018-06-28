@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'java-gradle-plugin'
+    id 'com.gradle.plugin-publish' version '0.9.10'
 }
 
 // read all scripts from ./gradle.d
@@ -28,8 +29,16 @@ gradlePlugin {
         dependencyCompliance {
             id = "de.acetous.dependency-compliance"
             implementationClass = "de.acetous.dependencycompliance.DependencyCompliancePlugin"
+            displayName = 'Dependency compliance'
+            description = 'A Gradle plugin to check and track dependencies in your project. Useful for meeting compliance targets, including 3rd-party libraries.'
+            tags = ['dependencies', 'compliance']
         }
     }
+}
+
+pluginBundle {
+    website = 'https://github.com/acetous/gradle-require-dependency-compliance'
+    vcsUrl = 'https://github.com/acetous/gradle-require-dependency-compliance.git'
 }
 
 repositories {
