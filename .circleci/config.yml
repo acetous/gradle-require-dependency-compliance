@@ -23,3 +23,5 @@ jobs:
       - run: 
           command: ./gradlew test
           working_directory: gradle-require-dependency-compliance-plugin
+      - store_artifacts:
+          path: gradle-require-dependency-compliance-plugin/build/libs
