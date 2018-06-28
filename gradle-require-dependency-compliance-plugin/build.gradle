@@ -17,7 +17,6 @@ ext {
     baseVersion = '1.0.0-rc'
 }
 
-
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
