@@ -28,8 +28,6 @@ gradlePlugin {
     plugins {
         dependencyCompliance {
             id = 'de.acetous.dependency-compliance'
-            description = 'A Gradle plugin to check and track dependencies in your project. Useful for meeting compliance targets, including 3rd-party libraries.'
-            tags = ['dependencies', 'compliance']
             implementationClass = 'de.acetous.dependencycompliance.DependencyCompliancePlugin'
         }
     }
@@ -38,6 +36,15 @@ gradlePlugin {
 pluginBundle {
     website = 'https://github.com/acetous/gradle-require-dependency-compliance'
     vcsUrl = 'https://github.com/acetous/gradle-require-dependency-compliance.git'
+
+    plugins {
+        dependencyCompliance {
+            id = 'de.acetous.dependency-compliance'
+            displayName = 'Gradle Dependency Compliance Plugin'
+            description = 'A Gradle plugin to check and track dependencies in your project. Useful for meeting compliance targets, including 3rd-party libraries.'
+            tags = ['dependencies', 'compliance']
+        }
+    }
 }
 
 repositories {
