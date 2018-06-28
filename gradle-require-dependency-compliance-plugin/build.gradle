@@ -27,11 +27,11 @@ version = getBuildVersion(baseVersion)
 gradlePlugin {
     plugins {
         dependencyCompliance {
-            id = "de.acetous.dependency-compliance"
-            implementationClass = "de.acetous.dependencycompliance.DependencyCompliancePlugin"
+            id = 'de.acetous.dependency-compliance'
             displayName = 'Dependency compliance'
             description = 'A Gradle plugin to check and track dependencies in your project. Useful for meeting compliance targets, including 3rd-party libraries.'
             tags = ['dependencies', 'compliance']
+            implementationClass = 'de.acetous.dependencycompliance.DependencyCompliancePlugin'
         }
     }
 }
