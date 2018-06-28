@@ -3,7 +3,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'de.acetous:gradle-enforce-dependency-compliance-plugin:1.0-SNAPSHOT'
+        classpath 'de.acetous:gradle-require-dependency-compliance-plugin:1.0-SNAPSHOT'
         classpath 'commons-lang:commons-lang:2.6'
     }
 }
@@ -20,5 +20,5 @@ dependencies {
 }
 
 dependencyCompliance {
-    outputFile = file('dependency-compliance-report.json')
+    outputFile = file('my-report.json')
 }
