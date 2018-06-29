@@ -59,7 +59,7 @@ workflows:
            - build
           filters:
             branches:
-              only: master
+              only: release
       - deploy:
           requires:
             - hold
