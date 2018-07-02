@@ -6,8 +6,10 @@ import org.gradle.api.artifacts.ModuleVersionIdentifier;
 import org.gradle.api.artifacts.repositories.ArtifactRepository;
 import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.initialization.dsl.ScriptHandler;
+import org.gradle.api.internal.artifacts.DefaultProjectComponentIdentifier;
 
 import java.nio.charset.Charset;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -39,6 +41,7 @@ public abstract class DependencyTask extends DefaultTask {
                 .flatMap(project -> project.getConfigurations().stream()) // get all configurations
                 .filter(Configuration::isCanBeResolved) // only if the configuration can be resolved
                 .flatMap(configuration -> configuration.getResolvedConfiguration().getResolvedArtifacts().stream()) // get all artifacts
+                .filter(resolvedArtifact -> !(resolvedArtifact.getId().getComponentIdentifier() instanceof DefaultProjectComponentIdentifier))
                 .map(resolvedArtifact -> resolvedArtifact.getModuleVersion().getId()) // map to ModuleVersionIdentifier
                 .collect(Collectors.toSet()); // return as Set
     }
