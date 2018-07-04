@@ -1,15 +1,14 @@
 package de.acetous.dependencycompliance;
 
+import de.acetous.dependencycompliance.export.DependencyIdentifier;
+import de.acetous.dependencycompliance.export.RepositoryIdentifier;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.artifacts.ModuleVersionIdentifier;
-import org.gradle.api.artifacts.repositories.ArtifactRepository;
 import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.initialization.dsl.ScriptHandler;
 import org.gradle.api.internal.artifacts.DefaultProjectComponentIdentifier;
 
 import java.nio.charset.Charset;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -36,13 +35,14 @@ public abstract class DependencyTask extends DefaultTask {
      *
      * @return All resolved dependencies.
      */
-    protected Set<ModuleVersionIdentifier> resolveDependencies() {
+    protected Set<DependencyIdentifier> resolveDependencies() {
         return getProject().getAllprojects().stream() // all projects
                 .flatMap(project -> project.getConfigurations().stream()) // get all configurations
                 .filter(Configuration::isCanBeResolved) // only if the configuration can be resolved
                 .flatMap(configuration -> configuration.getResolvedConfiguration().getResolvedArtifacts().stream()) // get all artifacts
                 .filter(resolvedArtifact -> !(resolvedArtifact.getId().getComponentIdentifier() instanceof DefaultProjectComponentIdentifier))
                 .map(resolvedArtifact -> resolvedArtifact.getModuleVersion().getId()) // map to ModuleVersionIdentifier
+                .map(DependencyIdentifier::new) //
                 .collect(Collectors.toSet()); // return as Set
     }
 
@@ -51,11 +51,12 @@ public abstract class DependencyTask extends DefaultTask {
      *
      * @return All resolved buildscript dependencies.
      */
-    protected Set<ModuleVersionIdentifier> resolveBuildDependencies() {
+    protected Set<DependencyIdentifier> resolveBuildDependencies() {
         return getProject().getAllprojects().stream() //
                 .map(project -> project.getBuildscript().getConfigurations().getByName(ScriptHandler.CLASSPATH_CONFIGURATION).getResolvedConfiguration()) //
                 .flatMap(confguration -> confguration.getResolvedArtifacts().stream()) //
                 .map(resolvedArtifact -> resolvedArtifact.getModuleVersion().getId()) //
+                .map(DependencyIdentifier::new) //
                 .collect(Collectors.toSet());
     }
 
@@ -64,9 +65,10 @@ public abstract class DependencyTask extends DefaultTask {
      *
      * @return The repositories.
      */
-    protected Set<ArtifactRepository> resolveRepositories() {
+    protected Set<RepositoryIdentifier> resolveRepositories() {
         return getProject().getAllprojects().stream() //
                 .flatMap(project -> project.getRepositories().stream()) //
+                .map(RepositoryIdentifier::new) //
                 .collect(Collectors.toSet());
     }
 
@@ -75,9 +77,10 @@ public abstract class DependencyTask extends DefaultTask {
      *
      * @return The buildscript's repositories.
      */
-    protected Set<ArtifactRepository> resolveBuildRepositories() {
+    protected Set<RepositoryIdentifier> resolveBuildRepositories() {
         return getProject().getAllprojects().stream() //
                 .flatMap(project -> project.getBuildscript().getRepositories().stream()) //
+                .map(RepositoryIdentifier::new) //
                 .collect(Collectors.toSet());
     }
 }

@@ -56,12 +56,12 @@
   ],
   "buildRepositories": [
     {
-      "name": "__plugin_repository__Gradle Central Plugin Repository",
-      "url": "https://plugins.gradle.org/"
-    },
-    {
       "name": "BintrayJCenter",
       "url": "https://jcenter.bintray.com/"
+    },
+    {
+      "name": "__plugin_repository__Gradle Central Plugin Repository",
+      "url": "https://plugins.gradle.org/"
     }
   ]
 }

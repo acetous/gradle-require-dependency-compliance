@@ -29,10 +29,10 @@ public class DependencyExportTask extends DependencyTask {
     @TaskAction
     void writeDependencies() {
 
-        Set<DependencyIdentifier> dependencies = resolveDependencies().stream().map(DependencyIdentifier::new).collect(Collectors.toSet());
-        Set<DependencyIdentifier> buildDependencies = resolveBuildDependencies().stream().map(DependencyIdentifier::new).collect(Collectors.toSet());
-        Set<RepositoryIdentifier> repositories = resolveRepositories().stream().map(RepositoryIdentifier::new).collect(Collectors.toSet());
-        Set<RepositoryIdentifier> buildRepositories = resolveBuildRepositories().stream().map(RepositoryIdentifier::new).collect(Collectors.toSet());
+        Set<DependencyIdentifier> dependencies = resolveDependencies();
+        Set<DependencyIdentifier> buildDependencies = resolveBuildDependencies();
+        Set<RepositoryIdentifier> repositories = resolveRepositories();
+        Set<RepositoryIdentifier> buildRepositories = resolveBuildRepositories();
 
         DependencyExport dependencyExport = new DependencyExport(dependencies, buildDependencies, repositories, buildRepositories);
 

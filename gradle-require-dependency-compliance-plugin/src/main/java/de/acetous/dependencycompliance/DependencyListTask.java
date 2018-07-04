@@ -1,7 +1,6 @@
 package de.acetous.dependencycompliance;
 
-import org.gradle.api.artifacts.repositories.ArtifactRepository;
-import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
+import de.acetous.dependencycompliance.export.RepositoryIdentifier;
 import org.gradle.api.tasks.TaskAction;
 
 import java.util.function.Consumer;
@@ -15,31 +14,22 @@ public class DependencyListTask extends DependencyTask {
     void listDependencies() {
 
         logHeading("Build dependencies:");
-        resolveDependencies().stream().forEach(moduleVersionIdentifier -> getLogger().lifecycle(moduleVersionIdentifier.toString()));
+        resolveDependencies().stream().forEach(dependencyIdentifier -> getLogger().lifecycle(dependencyIdentifier.toString()));
 
         logHeading("Buildscript dependencies:");
-        resolveBuildDependencies().stream().forEach(moduleVersionIdentifier -> getLogger().lifecycle(moduleVersionIdentifier.toString()));
+        resolveBuildDependencies().stream().forEach(dependencyIdentifier -> getLogger().lifecycle(dependencyIdentifier.toString()));
 
-
-        Consumer<ArtifactRepository> artifactRepositoryConsumer = artifactRepository -> {
-            if (artifactRepository instanceof MavenArtifactRepository) {
-                MavenArtifactRepository mavenArtifactRepository = (MavenArtifactRepository) artifactRepository;
-                getLogger().lifecycle(artifactRepository.getName() + " (" + mavenArtifactRepository.getUrl() + ")");
-            } else {
-                getLogger().lifecycle(artifactRepository.getName());
-            }
-
-        };
 
         logHeading("Build repositories:");
-        resolveRepositories().stream().forEach(artifactRepositoryConsumer);
+        resolveRepositories().forEach(repository -> getLogger().lifecycle(repository.toString()));
 
         logHeading("Buildscript repositories:");
-        resolveBuildRepositories().stream().forEach(artifactRepositoryConsumer);
+        resolveBuildRepositories().forEach(repository -> getLogger().lifecycle(repository.toString()));
     }
 
     /**
      * Write the heading to the log with additional formatting.
+     *
      * @param heading The heading to log.
      */
     private void logHeading(String heading) {
