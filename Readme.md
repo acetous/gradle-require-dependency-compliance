@@ -1,6 +1,9 @@
 # de.acetous.dependency-compliance
 
-[![CircleCI](https://circleci.com/gh/acetous/gradle-require-dependency-compliance/tree/master.svg?style=svg)](https://circleci.com/gh/acetous/gradle-require-dependency-compliance/tree/master)
+[![CircleCI](https://img.shields.io/circleci/project/github/acetous/gradle-require-dependency-compliance/master.svg)](https://circleci.com/gh/acetous/gradle-require-dependency-compliance/tree/master)
+[![CircleCI](https://img.shields.io/github/license/acetous/gradle-require-dependency-compliance.svg)](https://github.com/acetous/gradle-require-dependency-compliance/blob/master/LICENSE)
+
+
 
 ## Repository structure
 
