@@ -27,19 +27,15 @@ public class DependencyCheckTask extends DependencyTask {
         DependencyExport dependencyExport = readJson(readExportPath());
 
         Set<DependencyIdentifier> violatingDependencies = resolveDependencies().stream()
-                .map(DependencyIdentifier::new) //
                 .filter(dependencyIdentifier -> !dependencyExport.getDependencies().contains(dependencyIdentifier)) //
                 .collect(Collectors.toSet());
         Set<DependencyIdentifier> violatingBuildDependencies = resolveBuildDependencies().stream() //
-                .map(DependencyIdentifier::new) //
                 .filter(dependencyIdentifier -> !dependencyExport.getBuildDependencies().contains(dependencyIdentifier)) //
                 .collect(Collectors.toSet());
         Set<RepositoryIdentifier> violatingRepositories = resolveRepositories().stream() //
-                .map(RepositoryIdentifier::new) //
                 .filter(repositoryIdentifier -> !dependencyExport.getRepositories().contains(repositoryIdentifier)) //
                 .collect(Collectors.toSet());
         Set<RepositoryIdentifier> violatingBuildRepositories = resolveBuildRepositories().stream() //
-                .map(RepositoryIdentifier::new) //
                 .filter(repositoryIdentifier -> !dependencyExport.getBuildRepositories().contains(repositoryIdentifier)) //
                 .collect(Collectors.toSet());
 

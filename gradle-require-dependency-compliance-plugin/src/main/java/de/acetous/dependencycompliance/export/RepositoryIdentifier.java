@@ -60,6 +60,6 @@ public class RepositoryIdentifier {
 
     @Override
     public String toString() {
-        return name + "(" + url + ")";
+        return name + " (" + url + ")";
     }
 }

@@ -3,3 +3,5 @@ rootProject.name = 'plugin-sandbox'
 includeBuild '../gradle-require-dependency-compliance-plugin'
 
 include 'submodule-parent:submodule'
+include 'another-module'
+

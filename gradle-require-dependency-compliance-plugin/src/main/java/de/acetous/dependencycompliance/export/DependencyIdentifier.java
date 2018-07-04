@@ -21,12 +21,19 @@ public class DependencyIdentifier {
 
     /**
      * Creates a {@code DependencyIdentifier} from a given {@link ModuleVersionIdentifier}.
+     *
      * @param moduleVersionIdentifier The {@code ModuleVersionIdentifier} to create this object from.
      */
     public DependencyIdentifier(ModuleVersionIdentifier moduleVersionIdentifier) {
         group = moduleVersionIdentifier.getGroup();
         name = moduleVersionIdentifier.getName();
         version = moduleVersionIdentifier.getVersion();
+    }
+
+    private DependencyIdentifier(String group, String name, String version) {
+        this.group = group;
+        this.name = name;
+        this.version = version;
     }
 
     public String getGroup() {
@@ -59,5 +66,9 @@ public class DependencyIdentifier {
     @Override
     public String toString() {
         return group + ":" + name + ":" + version;
+    }
+
+    public static DependencyIdentifier create(String group, String name, String version) {
+        return new DependencyIdentifier(group, name, version);
     }
 }
