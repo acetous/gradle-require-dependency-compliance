@@ -30,4 +30,11 @@ public class CheckTest extends AbstractTest {
         assertThat(result.task(":dependencyComplianceCheck").getOutcome()).isEqualTo(TaskOutcome.FAILED);
         assertThat(result.getOutput()).matches(Pattern.compile(".*Dependency compliance export expectet at '.*' is not present\\..*", Pattern.DOTALL));
     }
+
+    @Test
+    public void shouldSuccessWithGeneratedReport() {
+        createGradleRunner().withArguments("dependencyComplianceExport").build();
+        BuildResult result = createGradleRunner().withArguments("dependencyComplianceCheck").build();
+        assertThat(result.task(":dependencyComplianceCheck").getOutcome()).isEqualTo(TaskOutcome.SUCCESS);
+    }
 }
