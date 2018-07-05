@@ -4,6 +4,11 @@
       "group": "com.google.code.gson",
       "name": "gson",
       "version": "2.8.5"
+    },
+    {
+      "group": "commons-io",
+      "name": "commons-io",
+      "version": "2.4"
     }
   ],
   "buildDependencies": [
@@ -11,12 +16,21 @@
       "group": "commons-io",
       "name": "commons-io",
       "version": "2.4"
+    },
+    {
+      "group": "com.google.code.gson",
+      "name": "gson",
+      "version": "2.8.5"
     }
   ],
   "repositories": [
     {
       "name": "BintrayJCenter",
       "url": "https://jcenter.bintray.com/"
+    },
+    {
+      "name": "MavenRepo",
+      "url": "https://repo.maven.apache.org/maven2/"
     }
   ],
   "buildRepositories": [
@@ -27,6 +41,10 @@
     {
       "name": "__plugin_repository__Gradle Central Plugin Repository",
       "url": "https://plugins.gradle.org/"
+    },
+    {
+      "name": "BintrayJCenter",
+      "url": "https://jcenter.bintray.com/"
     }
   ]
 }
