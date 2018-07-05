@@ -11,7 +11,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Task to export all dependencies and repositories to the {@code outputFile}.
@@ -38,17 +37,18 @@ public class DependencyExportTask extends DependencyTask {
 
         String exportJson = gson.toJson(dependencyExport);
 
-            Path path = outputFile.getAsFile().get().toPath();
-            createFile(path);
-            try {
-                Files.write(path, exportJson.getBytes(CHARSET), StandardOpenOption.TRUNCATE_EXISTING);
-            } catch (IOException e) {
-                throw new IllegalStateException("Cannot write file: " + path);
-            }
+        Path path = outputFile.getAsFile().get().toPath();
+        createFile(path);
+        try {
+            Files.write(path, exportJson.getBytes(CHARSET), StandardOpenOption.TRUNCATE_EXISTING);
+        } catch (IOException e) {
+            throw new IllegalStateException("Cannot write file: " + path);
+        }
     }
 
     /**
      * Create a file if not present. Created intermediate directories.
+     *
      * @param path The path to the file.
      */
     private void createFile(Path path) {

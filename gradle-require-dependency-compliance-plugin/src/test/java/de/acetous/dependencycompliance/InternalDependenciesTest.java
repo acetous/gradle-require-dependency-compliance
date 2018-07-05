@@ -5,7 +5,6 @@ import de.acetous.dependencycompliance.export.DependencyIdentifier;
 import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.TaskOutcome;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
