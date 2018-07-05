@@ -11,7 +11,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Task to export all dependencies and repositories to the {@code outputFile}.
@@ -29,26 +28,27 @@ public class DependencyExportTask extends DependencyTask {
     @TaskAction
     void writeDependencies() {
 
-        Set<DependencyIdentifier> dependencies = resolveDependencies().stream().map(DependencyIdentifier::new).collect(Collectors.toSet());
-        Set<DependencyIdentifier> buildDependencies = resolveBuildDependencies().stream().map(DependencyIdentifier::new).collect(Collectors.toSet());
-        Set<RepositoryIdentifier> repositories = resolveRepositories().stream().map(RepositoryIdentifier::new).collect(Collectors.toSet());
-        Set<RepositoryIdentifier> buildRepositories = resolveBuildRepositories().stream().map(RepositoryIdentifier::new).collect(Collectors.toSet());
+        Set<DependencyIdentifier> dependencies = resolveDependencies();
+        Set<DependencyIdentifier> buildDependencies = resolveBuildDependencies();
+        Set<RepositoryIdentifier> repositories = resolveRepositories();
+        Set<RepositoryIdentifier> buildRepositories = resolveBuildRepositories();
 
         DependencyExport dependencyExport = new DependencyExport(dependencies, buildDependencies, repositories, buildRepositories);
 
         String exportJson = gson.toJson(dependencyExport);
 
-            Path path = outputFile.getAsFile().get().toPath();
-            createFile(path);
-            try {
-                Files.write(path, exportJson.getBytes(CHARSET), StandardOpenOption.TRUNCATE_EXISTING);
-            } catch (IOException e) {
-                throw new IllegalStateException("Cannot write file: " + path);
-            }
+        Path path = outputFile.getAsFile().get().toPath();
+        createFile(path);
+        try {
+            Files.write(path, exportJson.getBytes(CHARSET), StandardOpenOption.TRUNCATE_EXISTING);
+        } catch (IOException e) {
+            throw new IllegalStateException("Cannot write file: " + path);
+        }
     }
 
     /**
      * Create a file if not present. Created intermediate directories.
+     *
      * @param path The path to the file.
      */
     private void createFile(Path path) {

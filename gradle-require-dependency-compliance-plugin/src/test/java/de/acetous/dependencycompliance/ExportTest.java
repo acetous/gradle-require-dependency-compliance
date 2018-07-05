@@ -1,48 +1,30 @@
 package de.acetous.dependencycompliance;
 
 
-import com.google.gson.Gson;
 import de.acetous.dependencycompliance.export.DependencyExport;
 import de.acetous.dependencycompliance.export.DependencyIdentifier;
 import de.acetous.dependencycompliance.export.RepositoryIdentifier;
-import org.apache.commons.io.FileUtils;
-import org.assertj.core.api.SoftAssertions;
 import org.gradle.testkit.runner.BuildResult;
-import org.gradle.testkit.runner.GradleRunner;
 import org.gradle.testkit.runner.TaskOutcome;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.util.Set;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
-public class DependencyComplianceExportTest {
+public class ExportTest extends AbstractTest {
 
-    @Rule
-    public final TemporaryFolder testProjectDir = new TemporaryFolder();
-
-    private File buildFile;
-    private Gson gson;
     private BuildResult result;
 
     @Before
     public void setup() throws IOException {
-        buildFile = testProjectDir.newFile("build.gradle");
-        gson = new Gson();
+        copyFile("export/testcase.gradle", "build.gradle");
 
-        FileUtils.copyInputStreamToFile(createBuildFileInputStream(), buildFile);
-
-        result = GradleRunner.create()
-                .withProjectDir(testProjectDir.getRoot())
+        result = createGradleRunner()
                 .withArguments("dependencyComplianceExport")
-                .withPluginClasspath()
                 .build();
     }
 
@@ -58,12 +40,16 @@ public class DependencyComplianceExportTest {
 
     @Test
     public void dependenReportShouldBeParsedAsJson() {
-        assertThatCode(this::parseDependencyExport).doesNotThrowAnyException();
+        assertThatCode(this::parseExport).doesNotThrowAnyException();
+    }
+
+    private DependencyExport parseExport() {
+        return parseDependencyExport("result.json");
     }
 
     @Test
     public void dependenciesShouldBeResolved() {
-        DependencyExport dependencyExport = parseDependencyExport();
+        DependencyExport dependencyExport = parseDependencyExport("result.json");
         Set<DependencyIdentifier> dependencies = dependencyExport.getDependencies();
         assertThat(dependencies).hasSize(7);
         dependencies.forEach(dependencyIdentifier -> {
@@ -75,7 +61,7 @@ public class DependencyComplianceExportTest {
 
     @Test
     public void repositoriesShouldBeResolved() {
-        DependencyExport dependencyExport = parseDependencyExport();
+        DependencyExport dependencyExport = parseDependencyExport("result.json");
         Set<RepositoryIdentifier> repositories = dependencyExport.getRepositories();
         assertThat(repositories).hasSize(1);
         repositories.forEach(repositoryIdentifier -> {
@@ -86,7 +72,7 @@ public class DependencyComplianceExportTest {
 
     @Test
     public void buildDependenciesShouldBeResolved() {
-        DependencyExport dependencyExport = parseDependencyExport();
+        DependencyExport dependencyExport = parseDependencyExport("result.json");
         Set<DependencyIdentifier> dependencies = dependencyExport.getBuildDependencies();
         assertThat(dependencies).hasSize(1);
         dependencies.forEach(dependencyIdentifier -> {
@@ -98,7 +84,7 @@ public class DependencyComplianceExportTest {
 
     @Test
     public void buildRepositoriesShouldBeResolved() {
-        DependencyExport dependencyExport = parseDependencyExport();
+        DependencyExport dependencyExport = parseDependencyExport("result.json");
         Set<RepositoryIdentifier> repositories = dependencyExport.getBuildRepositories();
         assertThat(repositories).hasSize(2);
         repositories.forEach(repositoryIdentifier -> {
@@ -106,20 +92,4 @@ public class DependencyComplianceExportTest {
         });
     }
 
-    private DependencyExport parseDependencyExport() {
-        return gson.fromJson(readFile("result.json"), DependencyExport.class);
-    }
-
-    private String readFile(String file) {
-        try {
-            return FileUtils.readFileToString(testProjectDir.getRoot().toPath().resolve(file).toFile(), Charset.forName("UTF-8"));
-        } catch (IOException e) {
-            fail("File '%s' could not be read.", file, e);
-            return "";
-        }
-    }
-
-    private InputStream createBuildFileInputStream() {
-        return getClass().getResourceAsStream("testcase.gradle");
-    }
 }

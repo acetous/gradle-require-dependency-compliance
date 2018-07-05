@@ -2,7 +2,6 @@ package de.acetous.dependencycompliance;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import de.acetous.dependencycompliance.DependencyTask;
 import de.acetous.dependencycompliance.export.DependencyExport;
 import de.acetous.dependencycompliance.export.DependencyIdentifier;
 import de.acetous.dependencycompliance.export.RepositoryIdentifier;
@@ -27,26 +26,22 @@ public class DependencyCheckTask extends DependencyTask {
         DependencyExport dependencyExport = readJson(readExportPath());
 
         Set<DependencyIdentifier> violatingDependencies = resolveDependencies().stream()
-                .map(DependencyIdentifier::new) //
                 .filter(dependencyIdentifier -> !dependencyExport.getDependencies().contains(dependencyIdentifier)) //
                 .collect(Collectors.toSet());
         Set<DependencyIdentifier> violatingBuildDependencies = resolveBuildDependencies().stream() //
-                .map(DependencyIdentifier::new) //
                 .filter(dependencyIdentifier -> !dependencyExport.getBuildDependencies().contains(dependencyIdentifier)) //
                 .collect(Collectors.toSet());
         Set<RepositoryIdentifier> violatingRepositories = resolveRepositories().stream() //
-                .map(RepositoryIdentifier::new) //
                 .filter(repositoryIdentifier -> !dependencyExport.getRepositories().contains(repositoryIdentifier)) //
                 .collect(Collectors.toSet());
         Set<RepositoryIdentifier> violatingBuildRepositories = resolveBuildRepositories().stream() //
-                .map(RepositoryIdentifier::new) //
                 .filter(repositoryIdentifier -> !dependencyExport.getBuildRepositories().contains(repositoryIdentifier)) //
                 .collect(Collectors.toSet());
 
-        violatingDependencies.forEach(dependencyIdentifier -> getLogger().error("Dependency is not listed in dependecy compliance export: '{}'", dependencyIdentifier));
-        violatingBuildDependencies.forEach(dependencyIdentifier -> getLogger().error("Buildfile dependency is not listed in dependecy compliance export: '{}'", dependencyIdentifier));
-        violatingRepositories.forEach(repositoryIdentifier -> getLogger().error("Repository is not listed in dependecy compliance export: '{}'", repositoryIdentifier));
-        violatingBuildRepositories.forEach(repositoryIdentifier -> getLogger().error("Buildfile repository is not listed in dependecy compliance export: '{}'", repositoryIdentifier));
+        violatingDependencies.forEach(dependencyIdentifier -> getLogger().error("Dependency is not listed in dependency compliance export: '{}'", dependencyIdentifier));
+        violatingBuildDependencies.forEach(dependencyIdentifier -> getLogger().error("Buildfile dependency is not listed in dependency compliance export: '{}'", dependencyIdentifier));
+        violatingRepositories.forEach(repositoryIdentifier -> getLogger().error("Repository is not listed in dependency compliance export: '{}'", repositoryIdentifier));
+        violatingBuildRepositories.forEach(repositoryIdentifier -> getLogger().error("Buildfile repository is not listed in dependency compliance export: '{}'", repositoryIdentifier));
 
         if (!violatingDependencies.isEmpty() || !violatingBuildDependencies.isEmpty() || !violatingRepositories.isEmpty() || !violatingBuildRepositories.isEmpty()) {
             throw new IllegalStateException("Build contains violating dependencies or repositories.");
@@ -55,6 +50,7 @@ public class DependencyCheckTask extends DependencyTask {
 
     /**
      * Deserialize a given report.
+     *
      * @param json The report as JSON-String.
      * @return The deserialized report.
      */
@@ -68,6 +64,7 @@ public class DependencyCheckTask extends DependencyTask {
 
     /**
      * Reads the report at the given path.
+     *
      * @return The report as JSON-String.
      */
     private String readExportPath() {

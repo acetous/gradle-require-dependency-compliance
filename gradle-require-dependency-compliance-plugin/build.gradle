@@ -15,7 +15,7 @@ ext {
     // must be  "major.minor.patch"
     // or       "major.minor.patch-prerelease"
     // see http://semver.org/
-    baseVersion = '1.0.0-rc'
+    baseVersion = '1.0.0-rc2'
 }
 
 sourceCompatibility = 1.8
