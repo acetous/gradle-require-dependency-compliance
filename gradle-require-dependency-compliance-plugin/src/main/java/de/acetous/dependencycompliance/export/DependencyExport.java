@@ -23,9 +23,10 @@ public class DependencyExport {
 
     /**
      * Constructor.
-     * @param dependencies The dependencies.
+     *
+     * @param dependencies      The dependencies.
      * @param buildDependencies The buildscript's dependencies.
-     * @param repositories The repositories.
+     * @param repositories      The repositories.
      * @param buildRepositories The buildscript's repositories.
      */
     public DependencyExport(Set<DependencyIdentifier> dependencies, Set<DependencyIdentifier> buildDependencies, Set<RepositoryIdentifier> repositories, Set<RepositoryIdentifier> buildRepositories) {
