@@ -15,16 +15,7 @@ def getBuildVersion(String baseVersion) {
 }
 
 def getReleaseVersion(String baseVersion) {
-    def version = baseVersion;
-
-    if (project.isCiBuild) {
-        version += "+${project.gitCommitShort}"
-
-    } else {
-        version += "+local"
-    }
-
-    return version
+    return baseVersion;
 }
 
 
