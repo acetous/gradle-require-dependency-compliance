@@ -39,10 +39,10 @@ public class DependencyCheckTask extends DependencyTask {
                 .filter(repositoryIdentifier -> !dependencyExport.getBuildRepositories().contains(repositoryIdentifier)) //
                 .collect(Collectors.toSet());
 
-        violatingDependencies.forEach(dependencyIdentifier -> getLogger().error("Dependency is not listed in dependecy compliance export: '{}'", dependencyIdentifier));
-        violatingBuildDependencies.forEach(dependencyIdentifier -> getLogger().error("Buildfile dependency is not listed in dependecy compliance export: '{}'", dependencyIdentifier));
-        violatingRepositories.forEach(repositoryIdentifier -> getLogger().error("Repository is not listed in dependecy compliance export: '{}'", repositoryIdentifier));
-        violatingBuildRepositories.forEach(repositoryIdentifier -> getLogger().error("Buildfile repository is not listed in dependecy compliance export: '{}'", repositoryIdentifier));
+        violatingDependencies.forEach(dependencyIdentifier -> getLogger().error("Dependency is not listed in dependency compliance export: '{}'", dependencyIdentifier));
+        violatingBuildDependencies.forEach(dependencyIdentifier -> getLogger().error("Buildfile dependency is not listed in dependency compliance export: '{}'", dependencyIdentifier));
+        violatingRepositories.forEach(repositoryIdentifier -> getLogger().error("Repository is not listed in dependency compliance export: '{}'", repositoryIdentifier));
+        violatingBuildRepositories.forEach(repositoryIdentifier -> getLogger().error("Buildfile repository is not listed in dependency compliance export: '{}'", repositoryIdentifier));
 
         if (!violatingDependencies.isEmpty() || !violatingBuildDependencies.isEmpty() || !violatingRepositories.isEmpty() || !violatingBuildRepositories.isEmpty()) {
             throw new IllegalStateException("Build contains violating dependencies or repositories.");
