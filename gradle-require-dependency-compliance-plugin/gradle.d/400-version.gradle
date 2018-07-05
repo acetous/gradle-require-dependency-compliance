@@ -14,6 +14,20 @@ def getBuildVersion(String baseVersion) {
     return version
 }
 
+def getReleaseVersion(String baseVersion) {
+    def version = baseVersion;
+
+    if (project.isCiBuild) {
+        version += "+${project.gitCommitShort}"
+
+    } else {
+        version += "+local"
+    }
+
+    return version
+}
+
+
 ext {
     // reads environment variables when running on snap-ci.com
     isCiBuild = getBoolEnv('CI', false)

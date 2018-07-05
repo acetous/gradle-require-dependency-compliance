@@ -15,7 +15,7 @@ ext {
     // must be  "major.minor.patch"
     // or       "major.minor.patch-prerelease"
     // see http://semver.org/
-    baseVersion = '1.0.0-rc2'
+    baseVersion = '1.0.0-rc.2'
 }
 
 sourceCompatibility = 1.8
@@ -43,6 +43,7 @@ pluginBundle {
             displayName = 'Gradle Dependency Compliance Plugin'
             description = 'A Gradle plugin to check and track dependencies in your project. Useful for meeting compliance targets, including 3rd-party libraries.'
             tags = ['dependencies', 'compliance']
+            version = getReleaseVersion(baseVersion)
         }
     }
 }
