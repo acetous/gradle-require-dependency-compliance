@@ -39,4 +39,5 @@ ext {
 
     // export method as closure to make it available for all projects
     getBuildVersion = this.&getBuildVersion
+    getReleaseVersion = this.&getReleaseVersion
 }
