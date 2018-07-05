@@ -2,7 +2,6 @@ package de.acetous.dependencycompliance;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import de.acetous.dependencycompliance.DependencyTask;
 import de.acetous.dependencycompliance.export.DependencyExport;
 import de.acetous.dependencycompliance.export.DependencyIdentifier;
 import de.acetous.dependencycompliance.export.RepositoryIdentifier;
@@ -51,6 +50,7 @@ public class DependencyCheckTask extends DependencyTask {
 
     /**
      * Deserialize a given report.
+     *
      * @param json The report as JSON-String.
      * @return The deserialized report.
      */
@@ -64,6 +64,7 @@ public class DependencyCheckTask extends DependencyTask {
 
     /**
      * Reads the report at the given path.
+     *
      * @return The report as JSON-String.
      */
     private String readExportPath() {

@@ -21,6 +21,7 @@ public class RepositoryIdentifier {
 
     /**
      * Creates an {@code RepositoryIdentifier} from an {@link ArtifactRepository}.
+     *
      * @param artifactRepository The repository to create this object.
      */
     public RepositoryIdentifier(ArtifactRepository artifactRepository) {

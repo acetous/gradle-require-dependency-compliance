@@ -74,6 +74,13 @@ public class CheckTest extends AbstractTest {
         assertTaskFailSummary(result);
     }
 
+    @Test
+    public void shouldSucceedWithReportContainingAdditionalDependencies() throws IOException {
+        copyFile("check/report-correct-other-entries.json", "dependency-compliance-report.json");
+        BuildResult result = createGradleRunner().withArguments("dependencyComplianceCheck").build();
+        assertThat(result.task(":dependencyComplianceCheck").getOutcome()).isEqualTo(TaskOutcome.SUCCESS);
+    }
+
     private void assertTaskFailSummary(BuildResult result) {
         assertThat(result.getOutput()).contains("Build contains violating dependencies or repositories.");
     }

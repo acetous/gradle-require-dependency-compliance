@@ -1,9 +1,6 @@
 package de.acetous.dependencycompliance;
 
-import de.acetous.dependencycompliance.export.RepositoryIdentifier;
 import org.gradle.api.tasks.TaskAction;
-
-import java.util.function.Consumer;
 
 /**
  * Lists all dependencies and repositories.
