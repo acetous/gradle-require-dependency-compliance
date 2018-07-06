@@ -71,7 +71,7 @@ Feel free to open issues for new ideas and submit pull requests when adding feat
 
 ### Repository structure
 
-This repository contains the plugin and a sanbox project for manual tests when editing the plugin.
+This repository contains the plugin and a sandbox project for manual tests when editing the plugin.
 
 #### ./gradle-require-dependency-compliance-plugin
 
