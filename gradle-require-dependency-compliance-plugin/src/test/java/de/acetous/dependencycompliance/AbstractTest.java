@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import de.acetous.dependencycompliance.export.DependencyExport;
 import org.apache.commons.io.FileUtils;
 import org.gradle.testkit.runner.GradleRunner;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
 
@@ -17,6 +18,11 @@ public abstract class AbstractTest {
 
     @Rule
     public final TemporaryFolder testProjectDir = new TemporaryFolder();
+
+    @Before
+    public void createGradleProperties() throws Exception {
+        FileUtils.copyInputStreamToFile(getClass().getClassLoader().getResourceAsStream("testkit-gradle.properties"), testProjectDir.newFile("gradle.properties"));
+    }
 
     protected Gson gson = new Gson();
 
