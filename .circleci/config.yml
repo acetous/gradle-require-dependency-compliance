@@ -74,9 +74,6 @@ workflows:
   build-and-deploy:
     jobs:
       - build
-      - sonarqube
-          requires:
-           - build
       - hold:
           type: approval
           requires:
@@ -87,3 +84,6 @@ workflows:
       - deploy:
           requires:
             - hold
+      - sonarqube:
+          requires:
+            - build
