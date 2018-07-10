@@ -44,7 +44,7 @@ public class DependencyCheckTask extends DependencyTask {
         violatingBuildRepositories.forEach(repositoryIdentifier -> getLogger().error("Buildfile repository is not listed in dependency compliance export: '{}'", repositoryIdentifier));
 
         if (!violatingDependencies.isEmpty() || !violatingBuildDependencies.isEmpty() || !violatingRepositories.isEmpty() || !violatingBuildRepositories.isEmpty()) {
-            throw new IllegalStateException("Build contains violating dependencies or repositories.");
+            throw new RuntimeException("Build contains violating dependencies or repositories.");
         }
     }
 

@@ -53,7 +53,11 @@ public abstract class AbstractTest {
                 .withPluginClasspath();
     }
 
-    protected void copyFile(String source, String destination) throws IOException {
-        FileUtils.copyInputStreamToFile(createFileInputStream(source), testProjectDir.newFile(destination));
+    protected void copyFile(String source, String destination) {
+        try {
+            FileUtils.copyInputStreamToFile(createFileInputStream(source), testProjectDir.newFile(destination));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

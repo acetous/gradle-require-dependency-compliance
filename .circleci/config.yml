@@ -43,6 +43,14 @@ jobs:
       JVM_OPTS: -Xmx3200m
       TERM: dumb
     steps:
+      - run:
+          name: Set PR number (fix for missing envorinment variable)
+          command: |
+              echo "CIRCLE_PR_NUMBER: $CIRCLE_PR_NUMBER"
+              echo "CIRCLE_PULL_REQUEST: $CIRCLE_PULL_REQUEST"
+              echo 'export CIRCLE_PR_NUMBER="${CIRCLE_PR_NUMBER:-${CIRCLE_PULL_REQUEST##*/}}"' >> $BASH_ENV
+              source $BASH_ENV
+              echo "CIRCLE_PR_NUMBER: $CIRCLE_PR_NUMBER"
       - attach_workspace:
           at: .
       - restore_cache:

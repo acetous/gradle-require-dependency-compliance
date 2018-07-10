@@ -3,6 +3,7 @@ package de.acetous.dependencycompliance;
 import de.acetous.dependencycompliance.export.DependencyIdentifier;
 import de.acetous.dependencycompliance.export.RepositoryIdentifier;
 import org.gradle.api.DefaultTask;
+import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.initialization.dsl.ScriptHandler;
@@ -10,7 +11,9 @@ import org.gradle.api.internal.artifacts.DefaultProjectComponentIdentifier;
 
 import java.nio.charset.Charset;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Parent-Class for all plugin tasks.
@@ -37,7 +40,12 @@ public abstract class DependencyTask extends DefaultTask {
      */
     protected Set<DependencyIdentifier> resolveDependencies() {
         return getProject().getAllprojects().stream() // all projects
-                .flatMap(project -> project.getConfigurations().stream()) // get all configurations
+                .flatMap(new Function<Project, Stream<? extends Configuration>>() {
+                    @Override
+                    public Stream<? extends Configuration> apply(Project project) {
+                        return project.getConfigurations().stream();
+                    }
+                }) // get all configurations
                 .filter(Configuration::isCanBeResolved) // only if the configuration can be resolved
                 .flatMap(configuration -> configuration.getResolvedConfiguration().getResolvedArtifacts().stream()) // get all artifacts
                 .filter(resolvedArtifact -> !(resolvedArtifact.getId().getComponentIdentifier() instanceof DefaultProjectComponentIdentifier))
