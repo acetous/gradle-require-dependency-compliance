@@ -12,8 +12,7 @@ jobs:
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "gradle-require-dependency-compliance-plugin/build.gradle" }}
-          - v1-dependencies-
-      - run: 
+      - run:
           command: ./gradlew resolveDependencies
           working_directory: gradle-require-dependency-compliance-plugin
       - save_cache:
@@ -43,12 +42,19 @@ jobs:
       JVM_OPTS: -Xmx3200m
       TERM: dumb
     steps:
+      - run:
+          name: Set PR number (fix for missing envorinment variable)
+          command: |
+              echo "CIRCLE_PR_NUMBER: $CIRCLE_PR_NUMBER"
+              echo "CIRCLE_PULL_REQUEST: $CIRCLE_PULL_REQUEST"
+              echo 'export CIRCLE_PR_NUMBER="${CIRCLE_PR_NUMBER:-${CIRCLE_PULL_REQUEST##*/}}"' >> $BASH_ENV
+              source $BASH_ENV
+              echo "CIRCLE_PR_NUMBER: $CIRCLE_PR_NUMBER"
       - attach_workspace:
           at: .
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "gradle-require-dependency-compliance-plugin/build.gradle" }}
-          - v1-dependencies-
       - run:
           command: ./gradlew sonarqube
           working_directory: gradle-require-dependency-compliance-plugin
@@ -65,8 +71,7 @@ jobs:
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "gradle-require-dependency-compliance-plugin/build.gradle" }}
-          - v1-dependencies-
-      - run: 
+      - run:
           command: ./gradlew publishPlugins -Pgradle.publish.key=$GRADLE_PUBLISH_KEY -Pgradle.publish.secret=$GRADLE_PUBLISH_SECRET
           working_directory: gradle-require-dependency-compliance-plugin
 workflows:
