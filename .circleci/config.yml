@@ -35,6 +35,23 @@ jobs:
       - persist_to_workspace:
           root: .
           paths: ./*
+  sonarqube:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    environment:
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+    steps:
+      - attach_workspace:
+          at: .
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "gradle-require-dependency-compliance-plugin/build.gradle" }}
+          - v1-dependencies-
+      - run:
+          command: ./gradlew sonarqube
+          working_directory: gradle-require-dependency-compliance-plugin
   deploy:
     docker:
       - image: circleci/openjdk:8-jdk
@@ -57,6 +74,9 @@ workflows:
   build-and-deploy:
     jobs:
       - build
+      - sonarqube
+          requires:
+           - build
       - hold:
           type: approval
           requires:
