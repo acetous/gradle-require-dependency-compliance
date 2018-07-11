@@ -28,6 +28,11 @@ public class DependencyExportTask extends DependencyTask {
     @TaskAction
     void writeDependencies() {
 
+        Set<DependencyIdentifier> dependencyFilter = getDependencyFilter();
+        if (!dependencyFilter.isEmpty()) {
+            logDependencyFilter(dependencyFilter);
+        }
+
         Set<DependencyIdentifier> dependencies = resolveDependencies();
         Set<DependencyIdentifier> buildDependencies = resolveBuildDependencies();
         Set<RepositoryIdentifier> repositories = resolveRepositories();

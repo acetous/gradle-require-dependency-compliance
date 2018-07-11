@@ -105,4 +105,9 @@ public abstract class DependencyTask extends DefaultTask {
                 .map(RepositoryIdentifier::new) //
                 .collect(Collectors.toSet());
     }
+
+    public void logDependencyFilter(Set<DependencyIdentifier> dependencyIdentifierList) {
+        getLogger().lifecycle("(DependencyCompliance) Ignoring these dependencies:");
+        dependencyIdentifierList.forEach(dependencyIdentifier -> getLogger().lifecycle(dependencyIdentifier.toString()));
+    }
 }
