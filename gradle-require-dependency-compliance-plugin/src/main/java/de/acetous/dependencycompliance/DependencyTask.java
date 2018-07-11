@@ -9,6 +9,8 @@ import org.gradle.api.initialization.dsl.ScriptHandler;
 import org.gradle.api.internal.artifacts.DefaultProjectComponentIdentifier;
 
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,6 +23,8 @@ public abstract class DependencyTask extends DefaultTask {
 
     final RegularFileProperty outputFile = getProject().getLayout().fileProperty();
 
+    private List<String> depdencyFilter = new ArrayList<>();
+
     /**
      * Set the {@code outputFile}.
      *
@@ -28,6 +32,16 @@ public abstract class DependencyTask extends DefaultTask {
      */
     public void setOutputFile(RegularFileProperty outputFile) {
         this.outputFile.set(outputFile);
+    }
+
+    public void setDepdencyFilter(List<String> depdencyFilter) {
+        this.depdencyFilter = depdencyFilter;
+    }
+
+    protected List<DependencyIdentifier> getDependencyFilter() {
+        ArrayList<DependencyIdentifier> filter = new ArrayList<>();
+        
+        return filter;
     }
 
     /**
