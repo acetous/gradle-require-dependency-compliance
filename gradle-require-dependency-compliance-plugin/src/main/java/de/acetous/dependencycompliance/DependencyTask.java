@@ -1,6 +1,7 @@
 package de.acetous.dependencycompliance;
 
 import de.acetous.dependencycompliance.export.DependencyIdentifier;
+import de.acetous.dependencycompliance.export.FilterService;
 import de.acetous.dependencycompliance.export.RepositoryIdentifier;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.artifacts.Configuration;
@@ -10,6 +11,7 @@ import org.gradle.api.internal.artifacts.DefaultProjectComponentIdentifier;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,6 +27,9 @@ public abstract class DependencyTask extends DefaultTask {
 
     private List<String> depdencyFilter = new ArrayList<>();
 
+    private final FilterService filterService = new FilterService();
+
+
     /**
      * Set the {@code outputFile}.
      *
@@ -34,14 +39,17 @@ public abstract class DependencyTask extends DefaultTask {
         this.outputFile.set(outputFile);
     }
 
+    /**
+     * Set filtered dependencies.
+     * @param depdencyFilter A list of dependencies.
+     */
     public void setDepdencyFilter(List<String> depdencyFilter) {
         this.depdencyFilter = depdencyFilter;
     }
 
-    protected List<DependencyIdentifier> getDependencyFilter() {
-        ArrayList<DependencyIdentifier> filter = new ArrayList<>();
-        
-        return filter;
+    protected Set<DependencyIdentifier> getDependencyFilter() {
+        return filterService.getDependencyFilter(depdencyFilter);
+
     }
 
     /**
