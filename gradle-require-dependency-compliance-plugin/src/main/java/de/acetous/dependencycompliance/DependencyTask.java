@@ -1,17 +1,17 @@
 package de.acetous.dependencycompliance;
 
 import de.acetous.dependencycompliance.export.DependencyIdentifier;
-import de.acetous.dependencycompliance.export.FilterService;
+import de.acetous.dependencycompliance.export.DependencyFilterService;
 import de.acetous.dependencycompliance.export.RepositoryIdentifier;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.initialization.dsl.ScriptHandler;
 import org.gradle.api.internal.artifacts.DefaultProjectComponentIdentifier;
+import org.gradle.api.provider.ListProperty;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,9 +25,9 @@ public abstract class DependencyTask extends DefaultTask {
 
     final RegularFileProperty outputFile = getProject().getLayout().fileProperty();
 
-    private List<String> depdencyFilter = new ArrayList<>();
+    private ListProperty<String> ignore = getProject().getObjects().listProperty(String.class);
 
-    private final FilterService filterService = new FilterService();
+    private final DependencyFilterService dependencyFilterService = new DependencyFilterService();
 
 
     /**
@@ -41,14 +41,14 @@ public abstract class DependencyTask extends DefaultTask {
 
     /**
      * Set filtered dependencies.
-     * @param depdencyFilter A list of dependencies.
+     * @param ignore A list of dependencies.
      */
-    public void setDepdencyFilter(List<String> depdencyFilter) {
-        this.depdencyFilter = depdencyFilter;
+    public void setIgnore(ListProperty<String> ignore) {
+        this.ignore.addAll(ignore);
     }
 
     protected Set<DependencyIdentifier> getDependencyFilter() {
-        return filterService.getDependencyFilter(depdencyFilter);
+        return dependencyFilterService.getDependencyFilter(ignore.get());
 
     }
 

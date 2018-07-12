@@ -23,7 +23,7 @@ dependencies {
 }
 
 dependencyCompliance {
-    dependencyFilter = [
+    ignore = [
             "foo:bar:123",
             "commons-io:commons-io:*",
             "org.springframework:*:*"

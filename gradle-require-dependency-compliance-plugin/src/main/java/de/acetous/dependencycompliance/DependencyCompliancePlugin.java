@@ -20,6 +20,6 @@ public class DependencyCompliancePlugin implements Plugin<Project> {
 
     private void setupTask(DependencyComplianceExtension extension, DependencyTask task) {
         task.setOutputFile(extension.getOutputFile());
-        task.setDepdencyFilter(extension.getDependencyFilter());
+        task.setIgnore(extension.getIgnore());
     }
 }

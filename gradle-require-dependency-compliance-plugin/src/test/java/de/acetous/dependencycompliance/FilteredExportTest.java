@@ -34,13 +34,11 @@ public class FilteredExportTest extends AbstractTest {
     }
 
     @Test
-    @Ignore
     public void taskShouldLogIgnoredDependencies() {
-        assertThat(result.getOutput()).contains("(DependencyCompliance) Ignoring these dependencies:\n" +
-                "foo:bar:123\n" +
-                "commons-io:commons-io:*\n" +
-                "org.springframework:*:*\n"
-        );
+        assertThat(result.getOutput()).contains("(DependencyCompliance) Ignoring these dependencies:");
+        assertThat(result.getOutput()).contains("foo:bar:123");
+        assertThat(result.getOutput()).contains("commons-io:commons-io:*");
+        assertThat(result.getOutput()).contains("org.springframework:*:*");
     }
 
     @Test

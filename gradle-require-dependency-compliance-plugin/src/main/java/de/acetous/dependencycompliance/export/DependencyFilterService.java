@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 /**
  * A service to handle filters for dependencies.
  */
-public class FilterService {
+public class DependencyFilterService {
 
     /**
      * Transforms a list of formatted strings (e.g: "foo:bar:123") to a list of {@link DependencyIdentifier}. Omitted
@@ -22,7 +22,7 @@ public class FilterService {
         return dependenciesList.stream() //
                 .map(s -> s.split(":")) //
                 .map(Arrays::asList) //
-                .map(FilterService::formatDependencyStrings) //
+                .map(DependencyFilterService::formatDependencyStrings) //
                 .map(strings -> DependencyIdentifier.create(strings.get(0), strings.get(1), strings.get(2))) //
                 .collect(Collectors.toSet());
     }

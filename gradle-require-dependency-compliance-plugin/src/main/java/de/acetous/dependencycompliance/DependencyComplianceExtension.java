@@ -2,9 +2,7 @@ package de.acetous.dependencycompliance;
 
 import org.gradle.api.Project;
 import org.gradle.api.file.RegularFileProperty;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.gradle.api.provider.ListProperty;
 
 /**
  * Extension for the {@link DependencyCompliancePlugin}.
@@ -16,26 +14,26 @@ public class DependencyComplianceExtension {
      */
     private final RegularFileProperty outputFile;
 
-    private List<String> dependencyFilter;
+    private ListProperty<String> ignore;
 
     public DependencyComplianceExtension(Project project) {
         outputFile = project.getLayout().fileProperty(project.provider(() -> project.getLayout().getProjectDirectory().file("dependency-compliance-report.json")));
-        dependencyFilter = new ArrayList<>();
+        ignore = project.getObjects().listProperty(String.class);
     }
 
     public void setOutputFile(RegularFileProperty outputFile) {
         this.outputFile.set(outputFile);
     }
 
-    public void setDependencyFilter(List<String> dependencyFilter) {
-        this.dependencyFilter = dependencyFilter;
+    public void setIgnore(ListProperty<String> ignore) {
+        this.ignore = ignore;
     }
 
     public RegularFileProperty getOutputFile() {
         return outputFile;
     }
 
-    public List<String> getDependencyFilter() {
-        return dependencyFilter;
+    public ListProperty<String> getIgnore() {
+        return ignore;
     }
 }
