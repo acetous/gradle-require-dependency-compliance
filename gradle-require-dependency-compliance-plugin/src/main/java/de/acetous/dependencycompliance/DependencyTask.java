@@ -1,5 +1,6 @@
 package de.acetous.dependencycompliance;
 
+import de.acetous.dependencycompliance.export.DependencyFilterService;
 import de.acetous.dependencycompliance.export.DependencyIdentifier;
 import de.acetous.dependencycompliance.export.RepositoryIdentifier;
 import org.gradle.api.DefaultTask;
@@ -7,6 +8,9 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.initialization.dsl.ScriptHandler;
 import org.gradle.api.internal.artifacts.DefaultProjectComponentIdentifier;
+import org.gradle.api.provider.ListProperty;
+import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.OutputFile;
 
 import java.nio.charset.Charset;
 import java.util.Set;
@@ -19,7 +23,14 @@ public abstract class DependencyTask extends DefaultTask {
 
     protected static final Charset CHARSET = Charset.forName("UTF-8");
 
+    @OutputFile
     final RegularFileProperty outputFile = getProject().getLayout().fileProperty();
+
+    @Input
+    private ListProperty<String> ignore = getProject().getObjects().listProperty(String.class);
+
+    private final DependencyFilterService dependencyFilterService = new DependencyFilterService();
+
 
     /**
      * Set the {@code outputFile}.
@@ -28,6 +39,23 @@ public abstract class DependencyTask extends DefaultTask {
      */
     public void setOutputFile(RegularFileProperty outputFile) {
         this.outputFile.set(outputFile);
+    }
+
+    /**
+     * Set filtered dependencies.
+     *
+     * @param ignore A list of dependencies.
+     */
+    public void setIgnore(ListProperty<String> ignore) {
+        this.ignore.addAll(ignore);
+    }
+
+    protected Set<DependencyIdentifier> getDependencyFilter() {
+        return dependencyFilterService.getDependencyFilter(ignore.get());
+    }
+
+    private boolean filterIgnoredDependencies(DependencyIdentifier dependencyIdentifier) {
+        return !dependencyFilterService.isIgnored(dependencyIdentifier, getDependencyFilter());
     }
 
     /**
@@ -43,6 +71,8 @@ public abstract class DependencyTask extends DefaultTask {
                 .filter(resolvedArtifact -> !(resolvedArtifact.getId().getComponentIdentifier() instanceof DefaultProjectComponentIdentifier))
                 .map(resolvedArtifact -> resolvedArtifact.getModuleVersion().getId()) // map to ModuleVersionIdentifier
                 .map(DependencyIdentifier::new) //
+                .distinct() //
+                .filter(this::filterIgnoredDependencies) //
                 .collect(Collectors.toSet()); // return as Set
     }
 
@@ -57,6 +87,8 @@ public abstract class DependencyTask extends DefaultTask {
                 .flatMap(confguration -> confguration.getResolvedArtifacts().stream()) //
                 .map(resolvedArtifact -> resolvedArtifact.getModuleVersion().getId()) //
                 .map(DependencyIdentifier::new) //
+                .distinct() //
+                .filter(this::filterIgnoredDependencies) //
                 .collect(Collectors.toSet());
     }
 
@@ -82,5 +114,10 @@ public abstract class DependencyTask extends DefaultTask {
                 .flatMap(project -> project.getBuildscript().getRepositories().stream()) //
                 .map(RepositoryIdentifier::new) //
                 .collect(Collectors.toSet());
+    }
+
+    public void logDependencyFilter(Set<DependencyIdentifier> dependencyIdentifierList) {
+        getLogger().lifecycle("(DependencyCompliance) Ignoring these dependencies:");
+        dependencyIdentifierList.forEach(dependencyIdentifier -> getLogger().lifecycle(dependencyIdentifier.toString()));
     }
 }

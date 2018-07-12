@@ -1,0 +1,35 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'commons-io:commons-io:2.4'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'de.acetous.dependency-compliance'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile(
+            'org.springframework:spring-context-support:5.0.7.RELEASE',
+    )
+    testCompile(
+            'com.google.code.gson:gson:2.8.5'
+    )
+}
+
+dependencyCompliance {
+    ignore = [
+            'foo:bar:123',
+            'commons-io:commons-io:*',
+            'org.springframework:*:*',
+            'com.google.code.gson:gson:2.8.5'
+    ]
+}

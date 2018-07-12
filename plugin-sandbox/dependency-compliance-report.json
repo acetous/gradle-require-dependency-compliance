@@ -45,7 +45,7 @@
     {
       "group": "de.acetous",
       "name": "gradle-require-dependency-compliance-plugin",
-      "version": "1.0.0-rc+local"
+      "version": "1.0.1-rc+local"
     }
   ],
   "repositories": [
