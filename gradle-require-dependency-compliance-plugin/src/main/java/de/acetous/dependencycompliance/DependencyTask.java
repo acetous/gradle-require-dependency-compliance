@@ -37,6 +37,7 @@ public abstract class DependencyTask extends DefaultTask {
 
     /**
      * Set if the MavenLocal repository should be ignored.
+     *
      * @param ignoreMavenLocal The provider for this property.
      */
     public void setIgnoreMavenLocal(Property<Boolean> ignoreMavenLocal) {
@@ -112,6 +113,7 @@ public abstract class DependencyTask extends DefaultTask {
         return getProject().getAllprojects().stream() //
                 .flatMap(project -> project.getRepositories().stream()) //
                 .map(RepositoryIdentifier::new) //
+                .filter(this::filterMavenLocal) //
                 .collect(Collectors.toSet());
     }
 
@@ -124,7 +126,12 @@ public abstract class DependencyTask extends DefaultTask {
         return getProject().getAllprojects().stream() //
                 .flatMap(project -> project.getBuildscript().getRepositories().stream()) //
                 .map(RepositoryIdentifier::new) //
+                .filter(this::filterMavenLocal) //
                 .collect(Collectors.toSet());
+    }
+
+    private boolean filterMavenLocal(RepositoryIdentifier repositoryIdentifier) {
+        return !ignoreMavenLocal.get() || !"MavenLocal".equals(repositoryIdentifier.getName());
     }
 
     public void logDependencyFilter(Set<DependencyIdentifier> dependencyIdentifierList) {
