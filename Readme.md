@@ -107,3 +107,17 @@ Run your manual tests here. You can change the sandbox project to demonstrate ne
 > cd plugin-sandbox
 > gradlew dependencyComplicanceList
 ```
+
+## Changelog
+
+### Version 1.2.0
+
+* add `ignoreMavenLocal` option
+
+### Version 1.1.0
+
+* add `ignore` option
+
+### Version 1.0.0
+
+* Initial Release
