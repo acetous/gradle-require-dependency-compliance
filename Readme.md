@@ -78,7 +78,8 @@ dependencyCompliance {
 | Parameter    | Default                             | Description               |
 |--------------|-------------------------------------|---------------------------|
 | `outputFile` | `dependency-compliance-report.json` | Filename / location of the export file. Used by the export- and check-task. |
-| `ignore`     | `[]`                                | Ignored dependencies as list. Entries should be strings in format `group:artifact:version`. The `artifact` and `version` can be a wildcard (`*`).| 
+| `ignore`     | `[]`                                | Ignored dependencies as list. Entries should be strings in format `group:artifact:version`. The `artifact` and `version` can be a wildcard (`*`).|
+| `ignoreMavenLocal` | `false`                       | Ignore the local Maven repository. This is useful if you use this repo and run the check task in your CI environment. 
 
 
 ## Contributing
