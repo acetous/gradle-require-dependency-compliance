@@ -17,7 +17,7 @@ public class DependencyFilterServiceTest {
 
     @Test
     public void shouldMapDependencies() {
-        assertThat(testSubject.getDependencyFilter(Arrays.asList("foo:bar:123", "group:id"))).containsExactlyInAnyOrder(
+        assertThat(testSubject.getDependencyFilter(Arrays.asList("foo:bar:123", "group:id:*"))).containsExactlyInAnyOrder(
                 DependencyIdentifier.create("foo", "bar", "123"),
                 DependencyIdentifier.create("group", "id", "*")
         );
@@ -25,14 +25,17 @@ public class DependencyFilterServiceTest {
 
     @Test
     public void shouldFormatDependencies() {
-        assertThat(DependencyFilterService.formatDependencyStrings(Arrays.asList("foo", "bar", "123"))).isEqualTo(Arrays.asList("foo", "bar", "123"));
-        assertThat(DependencyFilterService.formatDependencyStrings(Arrays.asList("foo", "bar"))).isEqualTo(Arrays.asList("foo", "bar", "*"));
-        assertThat(DependencyFilterService.formatDependencyStrings(Arrays.asList("foo"))).isEqualTo(Arrays.asList("foo", "*", "*"));
+        assertThat(DependencyFilterService.validateDependencyFormat(Arrays.asList("foo", "bar", "123"))).isEqualTo(Arrays.asList("foo", "bar", "123"));
+        assertThat(DependencyFilterService.validateDependencyFormat(Arrays.asList("foo", "bar", "*"))).isEqualTo(Arrays.asList("foo", "bar", "*"));
+        assertThat(DependencyFilterService.validateDependencyFormat(Arrays.asList("foo", "*", "*"))).isEqualTo(Arrays.asList("foo", "*", "*"));
     }
 
     @Test
     public void shouldThrowException() {
-        assertThatCode(() -> DependencyFilterService.formatDependencyStrings(Arrays.asList("1", "2", "3", "4"))).hasMessage("Filtered dependency not valid: 1:2:3:4");
+        assertThatCode(() -> DependencyFilterService.validateDependencyFormat(Arrays.asList("1", "2", "3", "4", "5"))).hasMessage("Filtered dependency not valid: 1:2:3:4:5");
+        assertThatCode(() -> DependencyFilterService.validateDependencyFormat(Arrays.asList("1", "2", "3", "4"))).hasMessage("Filtered dependency not valid: 1:2:3:4");
+        assertThatCode(() -> DependencyFilterService.validateDependencyFormat(Arrays.asList("1", "2"))).hasMessage("Filtered dependency not valid: 1:2");
+        assertThatCode(() -> DependencyFilterService.validateDependencyFormat(Collections.singletonList("1"))).hasMessage("Filtered dependency not valid: 1");
     }
 
     @Test

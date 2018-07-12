@@ -23,20 +23,16 @@ public class DependencyFilterService {
         return dependenciesList.stream() //
                 .map(s -> s.split(":")) //
                 .map(Arrays::asList) //
-                .map(DependencyFilterService::formatDependencyStrings) //
+                .map(DependencyFilterService::validateDependencyFormat) //
                 .map(strings -> DependencyIdentifier.create(strings.get(0), strings.get(1), strings.get(2))) //
                 .collect(Collectors.toSet());
     }
 
-    static List<String> formatDependencyStrings(List<String> strings) {
-        List<String> result = new ArrayList<>(strings);
-        if (result.size() > 3) {
+    static List<String> validateDependencyFormat(List<String> strings) {
+        if (strings.size() != 3) {
             throw new IllegalStateException("Filtered dependency not valid: " + String.join(":", strings));
         }
-        while (result.size() < 3) {
-            result.add("*");
-        }
-        return result;
+        return new ArrayList<>(strings);
     }
 
     public boolean isIgnored(DependencyIdentifier dependencyIdentifier, Set<DependencyIdentifier> dependencyFilter) {

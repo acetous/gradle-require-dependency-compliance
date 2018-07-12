@@ -44,6 +44,13 @@ This will check for additional dependencies and repositories and fail the build.
 introduces a new dependency or repository he will need to update the report file or your CI build will fail. You can
 always check which dependencies were introduced by checking the history of that file. 
 
+### Ignoring dependencies
+
+You may want to ignore some dependencies, maybe in case of own libraries you use. Add ignored libraries with the `ignore` option
+to your configuration. Your can ignore specific versions (e.g. `junit:junit:4.12`), an artifact of any version (e.g. `junit:junit:*`)
+or whole groups (e.g. `junit:*:*`).
+
+
 ## Plugin Documentation
 
 ### Tasks
@@ -60,12 +67,18 @@ Example:
 ```
 dependencyCompliance {
     outputFile = file('my-custom-report-file.json')
+    ignore = [
+            'org.assertj:*:*',
+            'com.google.code.gson:gson:*',
+            'junit:junit:4.12',
+    ]
 }
 ```
 
 | Parameter    | Default                             | Description               |
 |--------------|-------------------------------------|---------------------------|
 | `outputFile` | `dependency-compliance-report.json` | Filename / location of the export file. Used by the export- and check-task. |
+| `ignore`     | `[]`                                | Ignored dependencies as list. Entries should be strings in format `group:artifact:version`. The `artifact` and `version` can be a wildcard (`*`).| 
 
 
 ## Contributing
