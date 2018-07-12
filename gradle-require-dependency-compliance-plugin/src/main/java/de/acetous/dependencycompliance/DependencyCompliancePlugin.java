@@ -21,5 +21,6 @@ public class DependencyCompliancePlugin implements Plugin<Project> {
     private void setupTask(DependencyComplianceExtension extension, DependencyTask task) {
         task.setOutputFile(extension.getOutputFile());
         task.setIgnore(extension.getIgnore());
+        task.setIgnoreMavenLocal(extension.getIgnoreMavenLocal());
     }
 }
