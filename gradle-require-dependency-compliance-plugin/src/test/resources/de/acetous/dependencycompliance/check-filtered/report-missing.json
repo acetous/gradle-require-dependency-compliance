@@ -1,0 +1,22 @@
+{
+  "dependencies": [
+  ],
+  "buildDependencies": [
+  ],
+  "repositories": [
+    {
+      "name": "BintrayJCenter",
+      "url": "https://jcenter.bintray.com/"
+    }
+  ],
+  "buildRepositories": [
+    {
+      "name": "MavenRepo",
+      "url": "https://repo.maven.apache.org/maven2/"
+    },
+    {
+      "name": "__plugin_repository__Gradle Central Plugin Repository",
+      "url": "https://plugins.gradle.org/"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath(
+                'commons-io:commons-io:2.4',
+                'com.google.code.gson:gson:2.8.5',
+        )
+    }
+}
+
+plugins {
+    id 'java'
+    id 'de.acetous.dependency-compliance'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    runtime(
+            'com.google.code.gson:gson:2.8.5',
+    )
+    testCompile(
+            'junit:junit:4.12',
+            'org.assertj:assertj-core:3.10.0',
+    )
+}
+
+dependencyCompliance {
+    ignore = [
+            'org.assertj:*:*',
+            'com.google.code.gson:gson:*',
+            'junit:junit:4.12',
+    ]
+}
