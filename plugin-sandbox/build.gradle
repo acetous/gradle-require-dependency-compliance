@@ -22,3 +22,10 @@ dependencies {
             project(':another-module'),
     )
 }
+
+dependencyCompliance {
+    ignore = [
+            "foo:bar:123",
+            "org.asdf:*:*"
+    ]
+}
