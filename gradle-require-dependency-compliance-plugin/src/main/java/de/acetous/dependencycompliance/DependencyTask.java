@@ -9,6 +9,7 @@ import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.initialization.dsl.ScriptHandler;
 import org.gradle.api.internal.artifacts.DefaultProjectComponentIdentifier;
 import org.gradle.api.provider.ListProperty;
+import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.OutputFile;
 
@@ -29,8 +30,19 @@ public abstract class DependencyTask extends DefaultTask {
     @Input
     private ListProperty<String> ignore = getProject().getObjects().listProperty(String.class);
 
+    @Input
+    private Property<Boolean> ignoreMavenLocal = getProject().getObjects().property(Boolean.class);
+
     private final DependencyFilterService dependencyFilterService = new DependencyFilterService();
 
+    /**
+     * Set if the MavenLocal repository should be ignored.
+     *
+     * @param ignoreMavenLocal The provider for this property.
+     */
+    public void setIgnoreMavenLocal(Property<Boolean> ignoreMavenLocal) {
+        this.ignoreMavenLocal.set(ignoreMavenLocal);
+    }
 
     /**
      * Set the {@code outputFile}.
@@ -101,6 +113,7 @@ public abstract class DependencyTask extends DefaultTask {
         return getProject().getAllprojects().stream() //
                 .flatMap(project -> project.getRepositories().stream()) //
                 .map(RepositoryIdentifier::new) //
+                .filter(this::filterMavenLocal) //
                 .collect(Collectors.toSet());
     }
 
@@ -113,7 +126,12 @@ public abstract class DependencyTask extends DefaultTask {
         return getProject().getAllprojects().stream() //
                 .flatMap(project -> project.getBuildscript().getRepositories().stream()) //
                 .map(RepositoryIdentifier::new) //
+                .filter(this::filterMavenLocal) //
                 .collect(Collectors.toSet());
+    }
+
+    private boolean filterMavenLocal(RepositoryIdentifier repositoryIdentifier) {
+        return !ignoreMavenLocal.get() || !"MavenLocal".equals(repositoryIdentifier.getName());
     }
 
     public void logDependencyFilter(Set<DependencyIdentifier> dependencyIdentifierList) {
