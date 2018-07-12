@@ -41,17 +41,18 @@ public class DependencyFilterService {
 
     public boolean isIgnored(DependencyIdentifier dependencyIdentifier, Set<DependencyIdentifier> dependencyFilter) {
         return dependencyFilter.stream() //
-                .anyMatch(ignore -> {
-                    if (dependencyIdentifier.equals(ignore)) {
-                        return true;
-                    }
-                    if (ignore.getVersion().equals("*") && ignore.getName().equals("*") && ignore.getGroup().equals(dependencyIdentifier.getGroup())) {
-                        return true;
-                    }
-                    if (ignore.getVersion().equals("*") && ignore.getGroup().equals(dependencyIdentifier.getGroup()) && ignore.getName().equals(dependencyIdentifier.getName())) {
-                        return true;
-                    }
-                    return false;
-                });
+                .anyMatch(ignore -> ignoreMatchesComplete(dependencyIdentifier, ignore) || ignoreWithArtifactWildcardMatchesGroup(dependencyIdentifier, ignore) || ignoreWithVersionWildcardMatchesArtifact(dependencyIdentifier, ignore));
+    }
+
+    private boolean ignoreWithVersionWildcardMatchesArtifact(DependencyIdentifier dependencyIdentifier, DependencyIdentifier ignore) {
+        return ignore.getVersion().equals("*") && ignore.getGroup().equals(dependencyIdentifier.getGroup()) && ignore.getName().equals(dependencyIdentifier.getName());
+    }
+
+    private boolean ignoreWithArtifactWildcardMatchesGroup(DependencyIdentifier dependencyIdentifier, DependencyIdentifier ignore) {
+        return ignore.getVersion().equals("*") && ignore.getName().equals("*") && ignore.getGroup().equals(dependencyIdentifier.getGroup());
+    }
+
+    private boolean ignoreMatchesComplete(DependencyIdentifier dependencyIdentifier, DependencyIdentifier ignore) {
+        return dependencyIdentifier.equals(ignore);
     }
 }
