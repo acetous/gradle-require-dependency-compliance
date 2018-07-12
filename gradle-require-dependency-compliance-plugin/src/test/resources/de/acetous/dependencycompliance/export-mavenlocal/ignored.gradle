@@ -1,0 +1,20 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+}
+
+plugins {
+    id 'java'
+    id 'de.acetous.dependency-compliance'
+}
+
+repositories {
+    jcenter()
+    mavenLocal()
+}
+
+dependencyCompliance {
+    ignoreMavenLocal = true
+}
