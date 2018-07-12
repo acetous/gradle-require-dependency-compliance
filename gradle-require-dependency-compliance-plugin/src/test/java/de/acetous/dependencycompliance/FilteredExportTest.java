@@ -7,7 +7,6 @@ import de.acetous.dependencycompliance.export.RepositoryIdentifier;
 import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.TaskOutcome;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -47,22 +46,15 @@ public class FilteredExportTest extends AbstractTest {
     }
 
     @Test
-    @Ignore
     public void dependenciesShouldBeResolved() {
-        DependencyExport dependencyExport = parseDependencyExport("result.json");
+        DependencyExport dependencyExport = parseDependencyExport();
         Set<DependencyIdentifier> dependencies = dependencyExport.getDependencies();
-        assertThat(dependencies).hasSize(7);
-        dependencies.forEach(dependencyIdentifier -> {
-            assertThat(dependencyIdentifier.getGroup()).isEqualTo("org.springframework");
-            assertThat(dependencyIdentifier.getName()).isIn("spring-core", "spring-context", "spring-jcl", "spring-expression", "spring-context-support", "spring-beans", "spring-aop");
-            assertThat(dependencyIdentifier.getVersion()).isEqualTo("5.0.7.RELEASE");
-        });
+        assertThat(dependencies).hasSize(0);
     }
 
     @Test
-    @Ignore
     public void repositoriesShouldBeResolved() {
-        DependencyExport dependencyExport = parseDependencyExport("result.json");
+        DependencyExport dependencyExport = parseDependencyExport();
         Set<RepositoryIdentifier> repositories = dependencyExport.getRepositories();
         assertThat(repositories).hasSize(1);
         repositories.forEach(repositoryIdentifier -> {
@@ -72,22 +64,15 @@ public class FilteredExportTest extends AbstractTest {
     }
 
     @Test
-    @Ignore
     public void buildDependenciesShouldBeResolved() {
-        DependencyExport dependencyExport = parseDependencyExport("result.json");
+        DependencyExport dependencyExport = parseDependencyExport();
         Set<DependencyIdentifier> dependencies = dependencyExport.getBuildDependencies();
-        assertThat(dependencies).hasSize(1);
-        dependencies.forEach(dependencyIdentifier -> {
-            assertThat(dependencyIdentifier.getGroup()).isEqualTo("commons-io");
-            assertThat(dependencyIdentifier.getName()).isEqualTo("commons-io");
-            assertThat(dependencyIdentifier.getVersion()).isEqualTo("2.4");
-        });
+        assertThat(dependencies).hasSize(0);
     }
 
     @Test
-    @Ignore
     public void buildRepositoriesShouldBeResolved() {
-        DependencyExport dependencyExport = parseDependencyExport("result.json");
+        DependencyExport dependencyExport = parseDependencyExport();
         Set<RepositoryIdentifier> repositories = dependencyExport.getBuildRepositories();
         assertThat(repositories).hasSize(2);
         repositories.forEach(repositoryIdentifier -> {

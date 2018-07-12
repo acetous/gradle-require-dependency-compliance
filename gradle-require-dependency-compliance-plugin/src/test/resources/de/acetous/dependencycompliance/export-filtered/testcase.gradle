@@ -20,12 +20,16 @@ dependencies {
     compile(
             'org.springframework:spring-context-support:5.0.7.RELEASE',
     )
+    testCompile(
+            'com.google.code.gson:gson:2.8.5'
+    )
 }
 
 dependencyCompliance {
     ignore = [
-            "foo:bar:123",
-            "commons-io:commons-io:*",
-            "org.springframework:*:*"
+            'foo:bar:123',
+            'commons-io:commons-io:*',
+            'org.springframework:*:*',
+            'com.google.code.gson:gson:2.8.5'
     ]
 }

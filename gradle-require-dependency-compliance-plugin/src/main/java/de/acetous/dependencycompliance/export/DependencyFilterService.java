@@ -14,6 +14,7 @@ public class DependencyFilterService {
     /**
      * Transforms a list of formatted strings (e.g: "foo:bar:123") to a list of {@link DependencyIdentifier}. Omitted
      * elements will be replaced by an asterix ("*"), e.g. "foo:bar" will be "foo:bar:*".
+     *
      * @param dependenciesList The list of formatted strings.
      * @return The list of {@link DependencyIdentifier}.
      * @throws IllegalStateException When a dependency string is not properly formatted.
@@ -36,5 +37,21 @@ public class DependencyFilterService {
             result.add("*");
         }
         return result;
+    }
+
+    public boolean isIgnored(DependencyIdentifier dependencyIdentifier, Set<DependencyIdentifier> dependencyFilter) {
+        return dependencyFilter.stream() //
+                .anyMatch(ignore -> {
+                    if (dependencyIdentifier.equals(ignore)) {
+                        return true;
+                    }
+                    if (ignore.getVersion().equals("*") && ignore.getName().equals("*") && ignore.getGroup().equals(dependencyIdentifier.getGroup())) {
+                        return true;
+                    }
+                    if (ignore.getVersion().equals("*") && ignore.getGroup().equals(dependencyIdentifier.getGroup()) && ignore.getName().equals(dependencyIdentifier.getName())) {
+                        return true;
+                    }
+                    return false;
+                });
     }
 }
