@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.Set;
+import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -28,6 +28,10 @@ public class ExportTest extends AbstractTest {
                 .build();
     }
 
+    private DependencyExport parseExport() {
+        return parseDependencyExport("result.json");
+    }
+
     @Test
     public void taskShouldSucceed() {
         assertThat(result.task(":dependencyComplianceExport").getOutcome()).isEqualTo(TaskOutcome.SUCCESS);
@@ -43,14 +47,10 @@ public class ExportTest extends AbstractTest {
         assertThatCode(this::parseExport).doesNotThrowAnyException();
     }
 
-    private DependencyExport parseExport() {
-        return parseDependencyExport("result.json");
-    }
-
     @Test
     public void dependenciesShouldBeResolved() {
-        DependencyExport dependencyExport = parseDependencyExport("result.json");
-        Set<DependencyIdentifier> dependencies = dependencyExport.getDependencies();
+        DependencyExport dependencyExport = parseExport();
+        Collection<DependencyIdentifier> dependencies = dependencyExport.getDependencies();
         assertThat(dependencies).hasSize(7);
         dependencies.forEach(dependencyIdentifier -> {
             assertThat(dependencyIdentifier.getGroup()).isEqualTo("org.springframework");
@@ -61,8 +61,8 @@ public class ExportTest extends AbstractTest {
 
     @Test
     public void repositoriesShouldBeResolved() {
-        DependencyExport dependencyExport = parseDependencyExport("result.json");
-        Set<RepositoryIdentifier> repositories = dependencyExport.getRepositories();
+        DependencyExport dependencyExport = parseExport();
+        Collection<RepositoryIdentifier> repositories = dependencyExport.getRepositories();
         assertThat(repositories).hasSize(1);
         repositories.forEach(repositoryIdentifier -> {
             assertThat(repositoryIdentifier.getName()).isEqualTo("BintrayJCenter");
@@ -72,8 +72,8 @@ public class ExportTest extends AbstractTest {
 
     @Test
     public void buildDependenciesShouldBeResolved() {
-        DependencyExport dependencyExport = parseDependencyExport("result.json");
-        Set<DependencyIdentifier> dependencies = dependencyExport.getBuildDependencies();
+        DependencyExport dependencyExport = parseExport();
+        Collection<DependencyIdentifier> dependencies = dependencyExport.getBuildDependencies();
         assertThat(dependencies).hasSize(1);
         dependencies.forEach(dependencyIdentifier -> {
             assertThat(dependencyIdentifier.getGroup()).isEqualTo("commons-io");
@@ -84,12 +84,11 @@ public class ExportTest extends AbstractTest {
 
     @Test
     public void buildRepositoriesShouldBeResolved() {
-        DependencyExport dependencyExport = parseDependencyExport("result.json");
-        Set<RepositoryIdentifier> repositories = dependencyExport.getBuildRepositories();
+        DependencyExport dependencyExport = parseExport();
+        Collection<RepositoryIdentifier> repositories = dependencyExport.getBuildRepositories();
         assertThat(repositories).hasSize(2);
         repositories.forEach(repositoryIdentifier -> {
             assertThat(repositoryIdentifier.getUrl()).isIn("https://repo.maven.apache.org/maven2/", "https://plugins.gradle.org/");
         });
     }
-
 }

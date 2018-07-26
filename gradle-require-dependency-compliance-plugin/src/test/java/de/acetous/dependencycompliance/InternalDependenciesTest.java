@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.Set;
+import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -43,7 +43,7 @@ public class InternalDependenciesTest extends AbstractTest {
     @Test
     public void shouldNotContainInternalDependencies() {
         DependencyExport dependencyExport = parseDependencyExport();
-        Set<DependencyIdentifier> dependencies = dependencyExport.getDependencies();
+        Collection<DependencyIdentifier> dependencies = dependencyExport.getDependencies();
         assertThat(dependencies).containsOnly(DependencyIdentifier.create("commons-io", "commons-io", "2.4"));
     }
 }

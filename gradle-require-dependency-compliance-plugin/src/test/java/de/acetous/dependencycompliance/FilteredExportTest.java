@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.Set;
+import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -48,14 +48,14 @@ public class FilteredExportTest extends AbstractTest {
     @Test
     public void dependenciesShouldBeResolved() {
         DependencyExport dependencyExport = parseDependencyExport();
-        Set<DependencyIdentifier> dependencies = dependencyExport.getDependencies();
+        Collection<DependencyIdentifier> dependencies = dependencyExport.getDependencies();
         assertThat(dependencies).hasSize(0);
     }
 
     @Test
     public void repositoriesShouldBeResolved() {
         DependencyExport dependencyExport = parseDependencyExport();
-        Set<RepositoryIdentifier> repositories = dependencyExport.getRepositories();
+        Collection<RepositoryIdentifier> repositories = dependencyExport.getRepositories();
         assertThat(repositories).hasSize(1);
         repositories.forEach(repositoryIdentifier -> {
             assertThat(repositoryIdentifier.getName()).isEqualTo("BintrayJCenter");
@@ -66,14 +66,14 @@ public class FilteredExportTest extends AbstractTest {
     @Test
     public void buildDependenciesShouldBeResolved() {
         DependencyExport dependencyExport = parseDependencyExport();
-        Set<DependencyIdentifier> dependencies = dependencyExport.getBuildDependencies();
+        Collection<DependencyIdentifier> dependencies = dependencyExport.getBuildDependencies();
         assertThat(dependencies).hasSize(0);
     }
 
     @Test
     public void buildRepositoriesShouldBeResolved() {
         DependencyExport dependencyExport = parseDependencyExport();
-        Set<RepositoryIdentifier> repositories = dependencyExport.getBuildRepositories();
+        Collection<RepositoryIdentifier> repositories = dependencyExport.getBuildRepositories();
         assertThat(repositories).hasSize(2);
         repositories.forEach(repositoryIdentifier -> {
             assertThat(repositoryIdentifier.getUrl()).isIn("https://repo.maven.apache.org/maven2/", "https://plugins.gradle.org/");
