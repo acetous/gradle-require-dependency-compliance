@@ -1,0 +1,23 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'commons-io:commons-io:2.4'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'de.acetous.dependency-compliance'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    runtime(
+            'com.google.code.gson:gson:2.8.5'
+    )
+}
