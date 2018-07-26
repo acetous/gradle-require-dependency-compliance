@@ -10,6 +10,7 @@ import org.gradle.api.tasks.TaskAction;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -57,7 +58,7 @@ public class DependencyCheckTask extends DependencyTask {
         }
     }
 
-    private void printViolatingDependencies(Set<DependencyIdentifier> existingDependencies, Set<DependencyIdentifier> violatingDependencies) {
+    private void printViolatingDependencies(Collection<DependencyIdentifier> existingDependencies, Collection<DependencyIdentifier> violatingDependencies) {
         violatingDependencies.stream().map(dependencyIdentifier -> {
             StringBuilder result = new StringBuilder("    ");
             result.append(dependencyIdentifier.toString());
@@ -70,7 +71,7 @@ public class DependencyCheckTask extends DependencyTask {
         }).forEach(s -> getLogger().error(s));
     }
 
-    List<String> getExistingVersions(DependencyIdentifier dependencyIdentifier, Set<DependencyIdentifier> existingDependencies) {
+    List<String> getExistingVersions(DependencyIdentifier dependencyIdentifier, Collection<DependencyIdentifier> existingDependencies) {
         return existingDependencies.stream() //
                 .filter(dependency -> dependencyIdentifier.getGroup().equals(dependency.getGroup()) && dependencyIdentifier.getName().equals(dependency.getName())) //
                 .map(DependencyIdentifier::getVersion) //
