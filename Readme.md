@@ -114,6 +114,7 @@ Run your manual tests here. You can change the sandbox project to demonstrate ne
 
 * add info about existing versions to task `dependencyComlianceCheck`
   *  `commons-io:commons-io:2.4 - existing versions: 2.3`
+* dependencies are now sorted for better readability
 
 ### Version 1.2.0
 
