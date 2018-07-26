@@ -43,7 +43,8 @@ public class CheckTest extends AbstractTest {
         copyFile("check/report-missing-dependency.json", "dependency-compliance-report.json");
         BuildResult result = createGradleRunner().withArguments("dependencyComplianceCheck").buildAndFail();
         assertThat(result.task(":dependencyComplianceCheck").getOutcome()).isEqualTo(TaskOutcome.FAILED);
-        assertThat(result.getOutput()).contains("Dependency is not listed in dependency compliance export: 'com.google.code.gson:gson:2.8.5'");
+        assertThat(result.getOutput()).contains("Dependencies are not listed in dependency compliance export.");
+        assertThat(result.getOutput()).contains("com.google.code.gson:gson:2.8.5");
         assertTaskFailSummary(result);
     }
 
@@ -52,7 +53,8 @@ public class CheckTest extends AbstractTest {
         copyFile("check/report-missing-build-dependency.json", "dependency-compliance-report.json");
         BuildResult result = createGradleRunner().withArguments("dependencyComplianceCheck").buildAndFail();
         assertThat(result.task(":dependencyComplianceCheck").getOutcome()).isEqualTo(TaskOutcome.FAILED);
-        assertThat(result.getOutput()).contains("Buildfile dependency is not listed in dependency compliance export: 'commons-io:commons-io:2.4'");
+        assertThat(result.getOutput()).contains("Buildfile dependencies are not listed in dependency compliance export.");
+        assertThat(result.getOutput()).contains("commons-io:commons-io:2.4");
         assertTaskFailSummary(result);
     }
 
