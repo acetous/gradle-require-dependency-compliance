@@ -14,7 +14,7 @@ for more information.
 
 ```
 plugins {
-  id "de.acetous.dependency-compliance" version "1.0.0"
+  id "de.acetous.dependency-compliance" version "1.3.0"
 }
 ```
 
