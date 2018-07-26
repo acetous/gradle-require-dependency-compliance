@@ -3,13 +3,13 @@ package de.acetous.dependencycompliance.export;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import de.acetous.dependencycompliance.DependencyTask;
-import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.tasks.TaskAction;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -17,13 +17,7 @@ import java.util.Set;
  */
 public class DependencyExportTask extends DependencyTask {
 
-    private final RegularFileProperty outputFile = getProject().getLayout().fileProperty();
-
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-    public void setOutputFile(RegularFileProperty outputFile) {
-        this.outputFile.set(outputFile);
-    }
 
     @TaskAction
     void writeDependencies() {
@@ -33,8 +27,8 @@ public class DependencyExportTask extends DependencyTask {
             logDependencyFilter(dependencyFilter);
         }
 
-        Set<DependencyIdentifier> dependencies = resolveDependencies();
-        Set<DependencyIdentifier> buildDependencies = resolveBuildDependencies();
+        List<DependencyIdentifier> dependencies = resolveDependencies();
+        List<DependencyIdentifier> buildDependencies = resolveBuildDependencies();
         Set<RepositoryIdentifier> repositories = resolveRepositories();
         Set<RepositoryIdentifier> buildRepositories = resolveBuildRepositories();
 

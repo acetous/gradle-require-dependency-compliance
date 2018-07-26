@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.regex.Pattern;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -43,8 +42,11 @@ public class FilteredCheckTest extends AbstractTest {
         copyFile("check-filtered/report-missing.json", "dependency-compliance-report.json");
         BuildResult result = createGradleRunner().withArguments("dependencyComplianceCheck").buildAndFail();
         assertThat(result.task(":dependencyComplianceCheck").getOutcome()).isEqualTo(TaskOutcome.FAILED);
-        assertThat(result.getOutput()).contains("Dependency is not listed in dependency compliance export: 'org.hamcrest:hamcrest-core:1.3'");
-        assertThat(result.getOutput()).contains("Buildfile dependency is not listed in dependency compliance export: 'commons-io:commons-io:2.4'");
+        assertThat(result.getOutput()).contains("Dependencies are not listed in dependency compliance export.");
+        assertThat(result.getOutput()).contains("org.hamcrest:hamcrest-core:1.3");
+        assertThat(result.getOutput()).contains("Buildfile dependencies are not listed in dependency compliance export.");
+        assertThat(result.getOutput()).contains("commons-io:commons-io:2.4");
+
         assertTaskFailSummary(result);
     }
 

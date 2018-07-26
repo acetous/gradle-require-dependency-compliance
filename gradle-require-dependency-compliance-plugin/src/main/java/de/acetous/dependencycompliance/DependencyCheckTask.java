@@ -10,6 +10,8 @@ import org.gradle.api.tasks.TaskAction;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -38,14 +40,42 @@ public class DependencyCheckTask extends DependencyTask {
                 .filter(repositoryIdentifier -> !dependencyExport.getBuildRepositories().contains(repositoryIdentifier)) //
                 .collect(Collectors.toSet());
 
-        violatingDependencies.forEach(dependencyIdentifier -> getLogger().error("Dependency is not listed in dependency compliance export: '{}'", dependencyIdentifier));
-        violatingBuildDependencies.forEach(dependencyIdentifier -> getLogger().error("Buildfile dependency is not listed in dependency compliance export: '{}'", dependencyIdentifier));
+        if (!violatingDependencies.isEmpty()) {
+            getLogger().error("Dependencies are not listed in dependency compliance export.");
+            printViolatingDependencies(dependencyExport.getDependencies(), violatingDependencies);
+        }
+
+        if (!violatingBuildDependencies.isEmpty()) {
+            getLogger().error("Buildfile dependencies are not listed in dependency compliance export.");
+            printViolatingDependencies(dependencyExport.getBuildDependencies(), violatingBuildDependencies);
+        }
+
         violatingRepositories.forEach(repositoryIdentifier -> getLogger().error("Repository is not listed in dependency compliance export: '{}'", repositoryIdentifier));
         violatingBuildRepositories.forEach(repositoryIdentifier -> getLogger().error("Buildfile repository is not listed in dependency compliance export: '{}'", repositoryIdentifier));
 
         if (!violatingDependencies.isEmpty() || !violatingBuildDependencies.isEmpty() || !violatingRepositories.isEmpty() || !violatingBuildRepositories.isEmpty()) {
             throw new IllegalStateException("Build contains violating dependencies or repositories.");
         }
+    }
+
+    private void printViolatingDependencies(Collection<DependencyIdentifier> existingDependencies, Collection<DependencyIdentifier> violatingDependencies) {
+        violatingDependencies.stream().map(dependencyIdentifier -> {
+            StringBuilder result = new StringBuilder("    ");
+            result.append(dependencyIdentifier.toString());
+            List<String> existingVersions = getExistingVersions(dependencyIdentifier, existingDependencies);
+            if (!existingVersions.isEmpty()) {
+                result.append(" - existing versions: ");
+                result.append(String.join(", ", existingVersions));
+            }
+            return result.toString();
+        }).forEach(s -> getLogger().error(s));
+    }
+
+    List<String> getExistingVersions(DependencyIdentifier dependencyIdentifier, Collection<DependencyIdentifier> existingDependencies) {
+        return existingDependencies.stream() //
+                .filter(dependency -> dependencyIdentifier.getGroup().equals(dependency.getGroup()) && dependencyIdentifier.getName().equals(dependency.getName())) //
+                .map(DependencyIdentifier::getVersion) //
+                .collect(Collectors.toList());
     }
 
     /**
