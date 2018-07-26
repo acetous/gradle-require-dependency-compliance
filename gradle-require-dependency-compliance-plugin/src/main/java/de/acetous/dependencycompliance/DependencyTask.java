@@ -14,6 +14,7 @@ import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.OutputFile;
 
 import java.nio.charset.Charset;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -75,7 +76,7 @@ public abstract class DependencyTask extends DefaultTask {
      *
      * @return All resolved dependencies.
      */
-    protected Set<DependencyIdentifier> resolveDependencies() {
+    protected List<DependencyIdentifier> resolveDependencies() {
         return getProject().getAllprojects().stream() // all projects
                 .flatMap(project -> project.getConfigurations().stream()) // get all configurations
                 .filter(Configuration::isCanBeResolved) // only if the configuration can be resolved
@@ -85,7 +86,8 @@ public abstract class DependencyTask extends DefaultTask {
                 .map(DependencyIdentifier::new) //
                 .distinct() //
                 .filter(this::filterIgnoredDependencies) //
-                .collect(Collectors.toSet()); // return as Set
+                .sorted(new DependencyIdentifierComparator()) //
+                .collect(Collectors.toList());
     }
 
     /**
@@ -93,7 +95,7 @@ public abstract class DependencyTask extends DefaultTask {
      *
      * @return All resolved buildscript dependencies.
      */
-    protected Set<DependencyIdentifier> resolveBuildDependencies() {
+    protected List<DependencyIdentifier> resolveBuildDependencies() {
         return getProject().getAllprojects().stream() //
                 .map(project -> project.getBuildscript().getConfigurations().getByName(ScriptHandler.CLASSPATH_CONFIGURATION).getResolvedConfiguration()) //
                 .flatMap(confguration -> confguration.getResolvedArtifacts().stream()) //
@@ -101,7 +103,8 @@ public abstract class DependencyTask extends DefaultTask {
                 .map(DependencyIdentifier::new) //
                 .distinct() //
                 .filter(this::filterIgnoredDependencies) //
-                .collect(Collectors.toSet());
+                .sorted(new DependencyIdentifierComparator()) //
+                .collect(Collectors.toList());
     }
 
     /**

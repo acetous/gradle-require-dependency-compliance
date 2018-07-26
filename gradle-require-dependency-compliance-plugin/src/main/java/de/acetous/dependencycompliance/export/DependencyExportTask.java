@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -33,8 +34,8 @@ public class DependencyExportTask extends DependencyTask {
             logDependencyFilter(dependencyFilter);
         }
 
-        Set<DependencyIdentifier> dependencies = resolveDependencies();
-        Set<DependencyIdentifier> buildDependencies = resolveBuildDependencies();
+        List<DependencyIdentifier> dependencies = resolveDependencies();
+        List<DependencyIdentifier> buildDependencies = resolveBuildDependencies();
         Set<RepositoryIdentifier> repositories = resolveRepositories();
         Set<RepositoryIdentifier> buildRepositories = resolveBuildRepositories();
 

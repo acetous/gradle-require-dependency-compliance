@@ -63,5 +63,6 @@ dependencies {
             'junit:junit:4.12',
             'commons-io:commons-io:2.4',
             'org.assertj:assertj-core:3.10.0',
+            'com.google.guava:guava:25.1-jre',
     )
 }
