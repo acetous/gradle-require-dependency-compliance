@@ -10,4 +10,5 @@ repositories {
 
 dependencies {
     compile 'org.springframework:spring-context:5.0.7.RELEASE'
+    compile 'org.apache.wicket:wicket:8.0.0'
 }

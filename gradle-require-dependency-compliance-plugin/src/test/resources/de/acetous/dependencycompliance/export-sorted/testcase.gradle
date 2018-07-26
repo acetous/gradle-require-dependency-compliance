@@ -1,0 +1,27 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath(
+                'commons-io:commons-io:2.4',
+                'org.apache.commons:commons-lang3:3.7',
+        )
+    }
+}
+
+plugins {
+    id 'java'
+    id 'de.acetous.dependency-compliance'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile(
+            'org.apache.wicket:wicket:8.0.0',
+            'org.springframework:spring-context-support:5.0.7.RELEASE',
+    )
+}

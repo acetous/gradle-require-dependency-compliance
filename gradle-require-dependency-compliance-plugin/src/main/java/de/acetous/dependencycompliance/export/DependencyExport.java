@@ -2,7 +2,7 @@ package de.acetous.dependencycompliance.export;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Set;
+import java.util.Collection;
 
 /**
  * Export of all dependencies, serializable as JSON.
@@ -10,16 +10,16 @@ import java.util.Set;
 public class DependencyExport {
 
     @SerializedName("dependencies")
-    private final Set<DependencyIdentifier> dependencies;
+    private final Collection<DependencyIdentifier> dependencies;
 
     @SerializedName("buildDependencies")
-    private final Set<DependencyIdentifier> buildDependencies;
+    private final Collection<DependencyIdentifier> buildDependencies;
 
     @SerializedName("repositories")
-    private final Set<RepositoryIdentifier> repositories;
+    private final Collection<RepositoryIdentifier> repositories;
 
     @SerializedName("buildRepositories")
-    private final Set<RepositoryIdentifier> buildRepositories;
+    private final Collection<RepositoryIdentifier> buildRepositories;
 
     /**
      * Constructor.
@@ -29,26 +29,26 @@ public class DependencyExport {
      * @param repositories      The repositories.
      * @param buildRepositories The buildscript's repositories.
      */
-    public DependencyExport(Set<DependencyIdentifier> dependencies, Set<DependencyIdentifier> buildDependencies, Set<RepositoryIdentifier> repositories, Set<RepositoryIdentifier> buildRepositories) {
+    public DependencyExport(Collection<DependencyIdentifier> dependencies, Collection<DependencyIdentifier> buildDependencies, Collection<RepositoryIdentifier> repositories, Collection<RepositoryIdentifier> buildRepositories) {
         this.dependencies = dependencies;
         this.buildDependencies = buildDependencies;
         this.repositories = repositories;
         this.buildRepositories = buildRepositories;
     }
 
-    public Set<DependencyIdentifier> getDependencies() {
+    public Collection<DependencyIdentifier> getDependencies() {
         return dependencies;
     }
 
-    public Set<DependencyIdentifier> getBuildDependencies() {
+    public Collection<DependencyIdentifier> getBuildDependencies() {
         return buildDependencies;
     }
 
-    public Set<RepositoryIdentifier> getRepositories() {
+    public Collection<RepositoryIdentifier> getRepositories() {
         return repositories;
     }
 
-    public Set<RepositoryIdentifier> getBuildRepositories() {
+    public Collection<RepositoryIdentifier> getBuildRepositories() {
         return buildRepositories;
     }
 }
