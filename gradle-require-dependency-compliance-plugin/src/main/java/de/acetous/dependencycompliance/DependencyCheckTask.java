@@ -10,8 +10,6 @@ import org.gradle.api.tasks.TaskAction;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -61,7 +59,7 @@ public class DependencyCheckTask extends DependencyTask {
 
     private void printViolatingDependencies(Set<DependencyIdentifier> existingDependencies, Set<DependencyIdentifier> violatingDependencies) {
         violatingDependencies.stream().map(dependencyIdentifier -> {
-            StringBuffer result = new StringBuffer("    ");
+            StringBuilder result = new StringBuilder("    ");
             result.append(dependencyIdentifier.toString());
             List<String> existingVersions = getExistingVersions(dependencyIdentifier, existingDependencies);
             if (!existingVersions.isEmpty()) {

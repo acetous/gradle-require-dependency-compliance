@@ -3,7 +3,6 @@ package de.acetous.dependencycompliance.export;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import de.acetous.dependencycompliance.DependencyTask;
-import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.tasks.TaskAction;
 
 import java.io.IOException;
@@ -17,13 +16,7 @@ import java.util.Set;
  */
 public class DependencyExportTask extends DependencyTask {
 
-    private final RegularFileProperty outputFile = getProject().getLayout().fileProperty();
-
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-    public void setOutputFile(RegularFileProperty outputFile) {
-        this.outputFile.set(outputFile);
-    }
 
     @TaskAction
     void writeDependencies() {

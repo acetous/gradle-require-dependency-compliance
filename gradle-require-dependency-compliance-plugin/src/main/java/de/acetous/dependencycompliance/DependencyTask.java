@@ -25,7 +25,7 @@ public abstract class DependencyTask extends DefaultTask {
     protected static final Charset CHARSET = Charset.forName("UTF-8");
 
     @OutputFile
-    final RegularFileProperty outputFile = getProject().getLayout().fileProperty();
+    protected final RegularFileProperty outputFile = getProject().getLayout().fileProperty();
 
     @Input
     private ListProperty<String> ignore = getProject().getObjects().listProperty(String.class);
