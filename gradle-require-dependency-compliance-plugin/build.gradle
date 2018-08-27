@@ -72,3 +72,8 @@ dependencies {
             'com.google.guava:guava:25.1-jre',
     )
 }
+
+wrapper {
+    gradleVersion = "4.10"
+    distributionType = Wrapper.DistributionType.ALL
+}
