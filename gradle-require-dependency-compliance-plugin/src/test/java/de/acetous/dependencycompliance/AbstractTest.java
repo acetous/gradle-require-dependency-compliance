@@ -21,7 +21,7 @@ public abstract class AbstractTest {
     protected Gson gson = new Gson();
 
     @Before
-    public void createGradleProperties() throws Exception {
+    public void createGradleProperties() {
         FileUtils.copyInputStreamToFile(getClass().getClassLoader().getResourceAsStream("testkit-gradle.properties"), testProjectDir.newFile("gradle.properties"));
     }
 
