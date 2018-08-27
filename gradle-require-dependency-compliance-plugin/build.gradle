@@ -51,6 +51,12 @@ pluginBundle {
     }
 }
 
+test {
+    if (project.hasProperty("gradleVersion")) {
+        systemProperties["gradleVersion"] = project.property("gradleVersion")
+    }
+}
+
 repositories {
     jcenter()
 }

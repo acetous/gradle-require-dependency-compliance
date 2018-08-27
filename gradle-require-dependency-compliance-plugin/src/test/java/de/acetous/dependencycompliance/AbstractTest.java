@@ -18,13 +18,12 @@ public abstract class AbstractTest {
 
     @Rule
     public final TemporaryFolder testProjectDir = new TemporaryFolder();
+    protected Gson gson = new Gson();
 
     @Before
     public void createGradleProperties() throws Exception {
         FileUtils.copyInputStreamToFile(getClass().getClassLoader().getResourceAsStream("testkit-gradle.properties"), testProjectDir.newFile("gradle.properties"));
     }
-
-    protected Gson gson = new Gson();
 
     protected DependencyExport parseDependencyExport() {
         return parseDependencyExport("dependency-compliance-report.json");
@@ -48,9 +47,20 @@ public abstract class AbstractTest {
     }
 
     protected GradleRunner createGradleRunner() {
-        return GradleRunner.create()
+        GradleRunner gradleRunner = GradleRunner.create();
+
+        String gradleVersion = getGradleVersionToTest();
+        if (gradleVersion != null) {
+            gradleRunner.withGradleVersion(gradleVersion);
+        }
+
+        return gradleRunner
                 .withProjectDir(testProjectDir.getRoot())
                 .withPluginClasspath();
+    }
+
+    private String getGradleVersionToTest() {
+        return System.getProperty("gradleVersion");
     }
 
     protected void copyFile(String source, String destination) throws IOException {
