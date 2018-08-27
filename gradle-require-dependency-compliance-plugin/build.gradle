@@ -51,6 +51,12 @@ pluginBundle {
     }
 }
 
+test {
+    if (project.hasProperty("gradleVersion")) {
+        systemProperties["gradleVersion"] = project.property("gradleVersion")
+    }
+}
+
 repositories {
     jcenter()
 }
@@ -65,4 +71,9 @@ dependencies {
             'org.assertj:assertj-core:3.10.0',
             'com.google.guava:guava:25.1-jre',
     )
+}
+
+wrapper {
+    gradleVersion = "4.10"
+    distributionType = Wrapper.DistributionType.ALL
 }
