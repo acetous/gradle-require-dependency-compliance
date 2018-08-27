@@ -6,6 +6,8 @@ Builds on CircleCI:
 Checked on Sonarcloud: [![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=de.acetous%3Agradle-dependency-compliance-plugin&metric=alert_status
 )](https://sonarcloud.io/dashboard?id=de.acetous%3Agradle-dependency-compliance-plugin) ![Code Coverage](https://sonarcloud.io/api/project_badges/measure?project=de.acetous%3Agradle-dependency-compliance-plugin&metric=coverage)
 
+Tested with Gradle 4.8.1.
+
 ## Usage
 
 Include this plugin in your root project. Visit this 
