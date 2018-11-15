@@ -190,3 +190,10 @@ workflows:
       - gradle-4.9:
           requires:
             - build
+      - gradle-4.10:
+          requires:
+            - build
+      - gradle-4.10.1:
+          requires:
+            - build
+            
