@@ -196,4 +196,3 @@ workflows:
       - gradle-4.10.1:
           requires:
             - build
-            
