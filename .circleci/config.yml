@@ -1,5 +1,6 @@
 version: 2
 jobs:
+
   build:
     docker:
       - image: circleci/openjdk:8-jdk
@@ -34,6 +35,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths: ./*
+
   sonarqube:
     docker:
       - image: circleci/openjdk:8-jdk
@@ -58,6 +60,7 @@ jobs:
       - run:
           command: ./gradlew sonarqube
           working_directory: gradle-require-dependency-compliance-plugin
+
   deploy:
     docker:
       - image: circleci/openjdk:8-jdk
@@ -74,7 +77,8 @@ jobs:
       - run:
           command: ./gradlew publishPlugins -Pgradle.publish.key=$GRADLE_PUBLISH_KEY -Pgradle.publish.secret=$GRADLE_PUBLISH_SECRET
           working_directory: gradle-require-dependency-compliance-plugin
-  regression-4.8:
+
+  gradle-4.8:
     docker:
     - image: circleci/openjdk:8-jdk
     working_directory: ~/repo
@@ -90,7 +94,8 @@ jobs:
     - run:
         command: ./gradlew check --project-prop gradleVersion=4.8
         working_directory: gradle-require-dependency-compliance-plugin
-  regression-4.8.1:
+
+  gradle-4.8.1:
     docker:
     - image: circleci/openjdk:8-jdk
     working_directory: ~/repo
@@ -106,7 +111,8 @@ jobs:
     - run:
         command: ./gradlew check --project-prop gradleVersion=4.8.1
         working_directory: gradle-require-dependency-compliance-plugin
-  regression-4.9:
+
+  gradle-4.9:
     docker:
     - image: circleci/openjdk:8-jdk
     working_directory: ~/repo
@@ -122,6 +128,41 @@ jobs:
     - run:
         command: ./gradlew check --project-prop gradleVersion=4.9
         working_directory: gradle-require-dependency-compliance-plugin
+
+  gradle-4.10:
+    docker:
+    - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    environment:
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+    steps:
+    - attach_workspace:
+        at: .
+    - restore_cache:
+        keys:
+        - v1-dependencies-{{ checksum "gradle-require-dependency-compliance-plugin/build.gradle" }}
+    - run:
+        command: ./gradlew check --project-prop gradleVersion=4.10
+        working_directory: gradle-require-dependency-compliance-plugin
+
+  gradle-4.10.1:
+    docker:
+    - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    environment:
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+    steps:
+    - attach_workspace:
+        at: .
+    - restore_cache:
+        keys:
+        - v1-dependencies-{{ checksum "gradle-require-dependency-compliance-plugin/build.gradle" }}
+    - run:
+        command: ./gradlew check --project-prop gradleVersion=4.10.1
+        working_directory: gradle-require-dependency-compliance-plugin
+
 workflows:
   version: 2
   build-and-deploy:
@@ -140,12 +181,12 @@ workflows:
       - sonarqube:
           requires:
             - build
-      - regression-4.8:
+      - gradle-4.8:
           requires:
             - build
-      - regression-4.8.1:
+      - gradle-4.8.1:
           requires:
           - build
-      - regression-4.9:
+      - gradle-4.9:
           requires:
             - build
