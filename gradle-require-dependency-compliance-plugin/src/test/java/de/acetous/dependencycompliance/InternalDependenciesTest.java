@@ -31,7 +31,7 @@ public class InternalDependenciesTest extends AbstractTest {
     @Test
     public void listDependencies() {
         createGradleRunner()
-                .withArguments("dependencyComplianceList")
+                .withArguments("dependencyComplianceList", "--stacktrace")
                 .build();
     }
 

@@ -15,7 +15,7 @@ public class DependencyCompliancePlugin implements Plugin<Project> {
 
         project.getTasks().create("dependencyComplianceCheck", DependencyCheckTask.class, task -> setupTask(extension, task));
         project.getTasks().create("dependencyComplianceExport", DependencyExportTask.class, task -> setupTask(extension, task));
-        project.getTasks().create("dependencyComplianceList", DependencyListTask.class);
+        project.getTasks().create("dependencyComplianceList", DependencyListTask.class, task -> setupTask(extension, task));
     }
 
     private void setupTask(DependencyComplianceExtension extension, DependencyTask task) {
