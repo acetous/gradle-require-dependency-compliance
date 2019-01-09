@@ -23,7 +23,6 @@ public class DependencyComplianceExtension {
         outputFile = project.getObjects().fileProperty().value(project.getLayout().getProjectDirectory().file("dependency-compliance-report.json"));
         ignore = project.getObjects().listProperty(String.class);
         ignoreMavenLocal = project.getObjects().property(Boolean.class).value(false);
-        project.getLogger().lifecycle("Konstruktor de.acetous.dependencycompliance.DependencyComplianceExtension");
     }
 
     public void setOutputFile(RegularFileProperty outputFile) {
