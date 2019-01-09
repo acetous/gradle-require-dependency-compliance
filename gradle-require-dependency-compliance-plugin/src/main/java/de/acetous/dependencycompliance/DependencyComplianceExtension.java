@@ -5,8 +5,6 @@ import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.Property;
 
-import java.util.Collections;
-
 /**
  * Extension for the {@link DependencyCompliancePlugin}.
  */
