@@ -63,12 +63,12 @@ public abstract class DependencyTask extends DefaultTask {
         this.ignore.set(ignore);
     }
 
-    protected Set<DependencyIdentifier> getDependencyFilter() {
+    protected Set<DependencyIdentifier> loadDependencyFilter() {
         return dependencyFilterService.getDependencyFilter(ignore.get());
     }
 
     private boolean filterIgnoredDependencies(DependencyIdentifier dependencyIdentifier) {
-        return !dependencyFilterService.isIgnored(dependencyIdentifier, getDependencyFilter());
+        return !dependencyFilterService.isIgnored(dependencyIdentifier, loadDependencyFilter());
     }
 
     /**
