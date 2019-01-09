@@ -26,7 +26,7 @@ public abstract class DependencyTask extends DefaultTask {
     protected static final Charset CHARSET = Charset.forName("UTF-8");
 
     @OutputFile
-    protected final RegularFileProperty outputFile = getProject().getLayout().fileProperty();
+    protected final RegularFileProperty outputFile = getProject().getObjects().fileProperty();
 
     @Input
     private ListProperty<String> ignore = getProject().getObjects().listProperty(String.class);
@@ -60,7 +60,7 @@ public abstract class DependencyTask extends DefaultTask {
      * @param ignore A list of dependencies.
      */
     public void setIgnore(ListProperty<String> ignore) {
-        this.ignore.addAll(ignore);
+        this.ignore.set(ignore);
     }
 
     protected Set<DependencyIdentifier> getDependencyFilter() {

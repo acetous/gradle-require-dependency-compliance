@@ -5,6 +5,8 @@ import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.Property;
 
+import java.util.Collections;
+
 /**
  * Extension for the {@link DependencyCompliancePlugin}.
  */
@@ -21,7 +23,7 @@ public class DependencyComplianceExtension {
 
     public DependencyComplianceExtension(Project project) {
         outputFile = project.getObjects().fileProperty().value(project.getLayout().getProjectDirectory().file("dependency-compliance-report.json"));
-        ignore = project.getObjects().listProperty(String.class);
+        ignore = project.getObjects().listProperty(String.class).empty();
         ignoreMavenLocal = project.getObjects().property(Boolean.class).value(false);
     }
 

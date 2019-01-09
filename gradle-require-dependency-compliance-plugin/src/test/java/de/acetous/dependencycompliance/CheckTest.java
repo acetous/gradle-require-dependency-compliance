@@ -79,7 +79,7 @@ public class CheckTest extends AbstractTest {
     @Test
     public void shouldSucceedWithReportContainingAdditionalDependencies() throws IOException {
         copyFile("check/report-correct-other-entries.json", "dependency-compliance-report.json");
-        BuildResult result = createGradleRunner().withArguments("dependencyComplianceCheck").build();
+        BuildResult result = createGradleRunner().withArguments("dependencyComplianceCheck", "--stacktrace").build();
         assertThat(result.task(":dependencyComplianceCheck").getOutcome()).isEqualTo(TaskOutcome.SUCCESS);
     }
 
