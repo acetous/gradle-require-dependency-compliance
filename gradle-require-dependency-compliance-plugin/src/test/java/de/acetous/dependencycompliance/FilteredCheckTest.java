@@ -18,29 +18,29 @@ public class FilteredCheckTest extends AbstractTest {
 
     @Test
     public void shouldSucceedWithGeneratedReport() {
-        createGradleRunner().withArguments("dependencyComplianceExport").build();
-        BuildResult result = createGradleRunner().withArguments("dependencyComplianceCheck").build();
+        createGradleRunner().withArguments("dependencyComplianceExport", "--stacktrace").build();
+        BuildResult result = createGradleRunner().withArguments("dependencyComplianceCheck", "--stacktrace").build();
         assertThat(result.task(":dependencyComplianceCheck").getOutcome()).isEqualTo(TaskOutcome.SUCCESS);
     }
 
     @Test
     public void shouldSucceedWithCorrectReport() throws IOException {
         copyFile("check-filtered/report-correct.json", "dependency-compliance-report.json");
-        BuildResult result = createGradleRunner().withArguments("dependencyComplianceCheck").build();
+        BuildResult result = createGradleRunner().withArguments("dependencyComplianceCheck", "--stacktrace").build();
         assertThat(result.task(":dependencyComplianceCheck").getOutcome()).isEqualTo(TaskOutcome.SUCCESS);
     }
 
     @Test
     public void shouldSucceedWithReportContainingIgnored() throws IOException {
         copyFile("check-filtered/report-full.json", "dependency-compliance-report.json");
-        BuildResult result = createGradleRunner().withArguments("dependencyComplianceCheck").build();
+        BuildResult result = createGradleRunner().withArguments("dependencyComplianceCheck", "--stacktrace").build();
         assertThat(result.task(":dependencyComplianceCheck").getOutcome()).isEqualTo(TaskOutcome.SUCCESS);
     }
 
     @Test
     public void shouldFailWithMissingDependency() throws IOException {
         copyFile("check-filtered/report-missing.json", "dependency-compliance-report.json");
-        BuildResult result = createGradleRunner().withArguments("dependencyComplianceCheck").buildAndFail();
+        BuildResult result = createGradleRunner().withArguments("dependencyComplianceCheck", "--stacktrace").buildAndFail();
         assertThat(result.task(":dependencyComplianceCheck").getOutcome()).isEqualTo(TaskOutcome.FAILED);
         assertThat(result.getOutput()).contains("Dependencies are not listed in dependency compliance export.");
         assertThat(result.getOutput()).contains("org.hamcrest:hamcrest-core:1.3");

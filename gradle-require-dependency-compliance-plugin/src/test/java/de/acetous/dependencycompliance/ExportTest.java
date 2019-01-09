@@ -24,7 +24,7 @@ public class ExportTest extends AbstractTest {
         copyFile("export/testcase.gradle", "build.gradle");
 
         result = createGradleRunner()
-                .withArguments("dependencyComplianceExport")
+                .withArguments("dependencyComplianceExport", "--stacktrace")
                 .build();
     }
 

@@ -17,7 +17,7 @@ public class CheckMavenLocalTest extends AbstractTest {
         copyFile("check-mavenlocal/not-ignored.gradle", "build.gradle");
         copyFile("check-mavenlocal/dependency-compliance-report.json", "dependency-compliance-report.json");
 
-        BuildResult result = createGradleRunner().withArguments("dependencyComplianceCheck").buildAndFail();
+        BuildResult result = createGradleRunner().withArguments("dependencyComplianceCheck", "--stacktrace").buildAndFail();
         assertThat(result.task(":dependencyComplianceCheck").getOutcome()).isEqualTo(TaskOutcome.FAILED);
         assertThat(result.getOutput()).contains("Repository is not listed in dependency compliance export: 'MavenLocal (file:");
     }
@@ -27,7 +27,7 @@ public class CheckMavenLocalTest extends AbstractTest {
         copyFile("check-mavenlocal/ignored.gradle", "build.gradle");
         copyFile("check-mavenlocal/dependency-compliance-report.json", "dependency-compliance-report.json");
 
-        BuildResult result = createGradleRunner().withArguments("dependencyComplianceCheck").build();
+        BuildResult result = createGradleRunner().withArguments("dependencyComplianceCheck", "--stacktrace").build();
         assertThat(result.task(":dependencyComplianceCheck").getOutcome()).isEqualTo(TaskOutcome.SUCCESS);
     }
 }

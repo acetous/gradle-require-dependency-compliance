@@ -19,7 +19,7 @@ public class NotFilteredExportTest extends AbstractTest {
         copyFile("export-filtered/testcase-no-ignores.gradle", "build.gradle");
 
         result = createGradleRunner()
-                .withArguments("dependencyComplianceExport")
+                .withArguments("dependencyComplianceExport", "--stacktrace")
                 .build();
     }
 
