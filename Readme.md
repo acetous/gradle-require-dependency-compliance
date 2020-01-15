@@ -12,7 +12,7 @@ Release 2.x is tested and runs with Gradle 5.0 and 5.1.
 | Gradle Version | Latest successfully tested Release |         
 |---|---|
 | 4.8 to 4.10.2 | 1.3.0 |
-| 5.0 to 5.1 | 2.0.0 |
+| 5.0 to 5.6.4 | 2.0.0 |
 
 
 
