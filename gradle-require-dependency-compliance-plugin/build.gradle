@@ -18,7 +18,7 @@ ext {
     // must be  "major.minor.patch"
     // or       "major.minor.patch-prerelease"
     // see http://semver.org/
-    baseVersion = '2.0.0'
+    baseVersion = '2.1.0'
 }
 
 sourceCompatibility = 1.8
@@ -62,10 +62,10 @@ repositories {
 }
 
 dependencies {
-    compile(
+    implementation(
             'com.google.code.gson:gson:2.8.5',
     )
-    testCompile(
+    testImplementation(
             'junit:junit:4.12',
             'commons-io:commons-io:2.4',
             'org.assertj:assertj-core:3.10.0',
@@ -74,7 +74,7 @@ dependencies {
 }
 
 wrapper {
-    gradleVersion = "5.6.4"
+    gradleVersion = "6.0.1"
     distributionType = Wrapper.DistributionType.ALL
 }
 
