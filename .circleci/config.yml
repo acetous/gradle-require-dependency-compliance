@@ -95,6 +95,91 @@ jobs:
         command: ./gradlew check --project-prop gradleVersion=5.0
         working_directory: gradle-require-dependency-compliance-plugin
 
+  gradle-5.1.1:
+    docker:
+    - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    environment:
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+    steps:
+    - attach_workspace:
+        at: .
+    - restore_cache:
+        keys:
+        - v1-dependencies-{{ checksum "gradle-require-dependency-compliance-plugin/build.gradle" }}
+    - run:
+        command: ./gradlew check --project-prop gradleVersion=5.1.1
+        working_directory: gradle-require-dependency-compliance-plugin
+
+  gradle-5.2.1:
+    docker:
+    - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    environment:
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+    steps:
+    - attach_workspace:
+        at: .
+    - restore_cache:
+        keys:
+        - v1-dependencies-{{ checksum "gradle-require-dependency-compliance-plugin/build.gradle" }}
+    - run:
+        command: ./gradlew check --project-prop gradleVersion=5.2.1
+        working_directory: gradle-require-dependency-compliance-plugin
+
+  gradle-5.3.1:
+    docker:
+    - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    environment:
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+    steps:
+    - attach_workspace:
+        at: .
+    - restore_cache:
+        keys:
+        - v1-dependencies-{{ checksum "gradle-require-dependency-compliance-plugin/build.gradle" }}
+    - run:
+        command: ./gradlew check --project-prop gradleVersion=5.3.1
+        working_directory: gradle-require-dependency-compliance-plugin
+
+  gradle-5.4.1:
+    docker:
+    - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    environment:
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+    steps:
+    - attach_workspace:
+        at: .
+    - restore_cache:
+        keys:
+        - v1-dependencies-{{ checksum "gradle-require-dependency-compliance-plugin/build.gradle" }}
+    - run:
+        command: ./gradlew check --project-prop gradleVersion=5.4.1
+        working_directory: gradle-require-dependency-compliance-plugin
+
+  gradle-5.5.1:
+    docker:
+    - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    environment:
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+    steps:
+    - attach_workspace:
+        at: .
+    - restore_cache:
+        keys:
+        - v1-dependencies-{{ checksum "gradle-require-dependency-compliance-plugin/build.gradle" }}
+    - run:
+        command: ./gradlew check --project-prop gradleVersion=5.5.1
+        working_directory: gradle-require-dependency-compliance-plugin
+
 workflows:
   version: 2
   build-and-deploy:
@@ -114,5 +199,20 @@ workflows:
           requires:
             - build
       - gradle-5.0:
+          requires:
+            - build
+      - gradle-5.1.1:
+          requires:
+            - build
+      - gradle-5.2.1:
+          requires:
+            - build
+      - gradle-5.3.2:
+          requires:
+            - build
+      - gradle-5.4.1:
+          requires:
+            - build
+      - gradle-5.5.1:
           requires:
             - build
