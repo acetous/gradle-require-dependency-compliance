@@ -22,7 +22,7 @@ public class ExportMavenLocalTest extends AbstractTest {
         copyFile("export-mavenlocal/not-ignored.gradle", "build.gradle");
 
         BuildResult result = createGradleRunner()
-                .withArguments("dependencyComplianceExport")
+                .withArguments("dependencyComplianceExport", "--stacktrace")
                 .build();
 
         DependencyExport dependencyExport = parseDependencyExport();
@@ -39,7 +39,7 @@ public class ExportMavenLocalTest extends AbstractTest {
         copyFile("export-mavenlocal/ignored.gradle", "build.gradle");
 
         BuildResult result = createGradleRunner()
-                .withArguments("dependencyComplianceExport")
+                .withArguments("dependencyComplianceExport", "--stacktrace")
                 .build();
 
         DependencyExport dependencyExport = parseDependencyExport();

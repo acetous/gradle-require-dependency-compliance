@@ -1,6 +1,3 @@
-# Compiled class file
-*.class
-
 # Log file
 *.log
 
@@ -97,3 +94,7 @@ fabric.properties
 
 # IDEA Plugins
 .idea/sonarlint/issuestore
+
+# Java
+test.exec
+*.class

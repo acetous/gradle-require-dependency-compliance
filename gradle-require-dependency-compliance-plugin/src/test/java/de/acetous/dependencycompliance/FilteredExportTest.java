@@ -23,7 +23,7 @@ public class FilteredExportTest extends AbstractTest {
         copyFile("export-filtered/testcase.gradle", "build.gradle");
 
         result = createGradleRunner()
-                .withArguments("dependencyComplianceExport")
+                .withArguments("dependencyComplianceExport", "--stacktrace")
                 .build();
     }
 

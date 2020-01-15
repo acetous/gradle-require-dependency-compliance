@@ -25,50 +25,50 @@ public abstract class DependencyTask extends DefaultTask {
 
     protected static final Charset CHARSET = Charset.forName("UTF-8");
 
-    @OutputFile
-    protected final RegularFileProperty outputFile = getProject().getLayout().fileProperty();
+    protected final RegularFileProperty outputFile = getProject().getObjects().fileProperty();
 
-    @Input
-    private ListProperty<String> ignore = getProject().getObjects().listProperty(String.class);
+    private final ListProperty<String> ignore = getProject().getObjects().listProperty(String.class);
 
-    @Input
-    private Property<Boolean> ignoreMavenLocal = getProject().getObjects().property(Boolean.class);
+    private final Property<Boolean> ignoreMavenLocal = getProject().getObjects().property(Boolean.class);
 
     private final DependencyFilterService dependencyFilterService = new DependencyFilterService();
 
     /**
-     * Set if the MavenLocal repository should be ignored.
+     * Set if the local Maven repository should be ignored.
      *
-     * @param ignoreMavenLocal The provider for this property.
+     * @return the property.
      */
-    public void setIgnoreMavenLocal(Property<Boolean> ignoreMavenLocal) {
-        this.ignoreMavenLocal.set(ignoreMavenLocal);
+    @Input
+    public Property<Boolean> getIgnoreMavenLocal() {
+        return ignoreMavenLocal;
     }
 
     /**
      * Set the {@code outputFile}.
      *
-     * @param outputFile The new file.
+     * @return The file.
      */
-    public void setOutputFile(RegularFileProperty outputFile) {
-        this.outputFile.set(outputFile);
+    @OutputFile
+    public RegularFileProperty getOutputFile() {
+        return this.outputFile;
     }
 
     /**
      * Set filtered dependencies.
      *
-     * @param ignore A list of dependencies.
+     * @return The list of dependencies.
      */
-    public void setIgnore(ListProperty<String> ignore) {
-        this.ignore.addAll(ignore);
+    @Input
+    public ListProperty<String> getIgnore() {
+        return this.ignore;
     }
 
-    protected Set<DependencyIdentifier> getDependencyFilter() {
+    protected Set<DependencyIdentifier> loadDependencyFilter() {
         return dependencyFilterService.getDependencyFilter(ignore.get());
     }
 
     private boolean filterIgnoredDependencies(DependencyIdentifier dependencyIdentifier) {
-        return !dependencyFilterService.isIgnored(dependencyIdentifier, getDependencyFilter());
+        return !dependencyFilterService.isIgnored(dependencyIdentifier, loadDependencyFilter());
     }
 
     /**

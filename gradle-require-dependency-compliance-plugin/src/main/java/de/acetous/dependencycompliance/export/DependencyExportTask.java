@@ -21,8 +21,7 @@ public class DependencyExportTask extends DependencyTask {
 
     @TaskAction
     void writeDependencies() {
-
-        Set<DependencyIdentifier> dependencyFilter = getDependencyFilter();
+        Set<DependencyIdentifier> dependencyFilter = loadDependencyFilter();
         if (!dependencyFilter.isEmpty()) {
             logDependencyFilter(dependencyFilter);
         }
