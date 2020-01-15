@@ -77,3 +77,11 @@ wrapper {
     gradleVersion = "5.6.4"
     distributionType = Wrapper.DistributionType.ALL
 }
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled false
+    }
+}
+sonarqube.dependsOn jacocoTestReport
