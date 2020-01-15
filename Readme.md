@@ -6,7 +6,17 @@ Builds on CircleCI:
 Checked on Sonarcloud: [![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=de.acetous%3Agradle-dependency-compliance-plugin&metric=alert_status
 )](https://sonarcloud.io/dashboard?id=de.acetous%3Agradle-dependency-compliance-plugin) ![Code Coverage](https://sonarcloud.io/api/project_badges/measure?project=de.acetous%3Agradle-dependency-compliance-plugin&metric=coverage)
 
-Tested with Gradle 4.8 to 4.10.2.
+
+Release 2.x is tested and runs with Gradle 5.0 and 5.1.
+
+| Gradle Version | Latest successfully tested Release |         
+|---|---|
+| 4.8 to 4.10.2 | 1.3.0 |
+| 5.0 to 5.6.4 | 2.0.0 |
+
+
+
+Release 1.3.0 is tested and runs with Gradle 4.8 to 4.10.2.
 
 ## Usage
 
@@ -111,6 +121,10 @@ Run your manual tests here. You can change the sandbox project to demonstrate ne
 ```
 
 ## Changelog
+
+### Version 2.0.0
+
+* compatible with Gradle 5.0
 
 ### Version 1.3.0
 

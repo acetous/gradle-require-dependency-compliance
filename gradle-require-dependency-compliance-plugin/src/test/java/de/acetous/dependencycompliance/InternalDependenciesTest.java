@@ -24,14 +24,14 @@ public class InternalDependenciesTest extends AbstractTest {
         copyFile("internaldependencies/submodule.gradle", "submodule/build.gradle");
 
         result = createGradleRunner()
-                .withArguments("dependencyComplianceExport")
+                .withArguments("dependencyComplianceExport", "--stacktrace")
                 .build();
     }
 
     @Test
     public void listDependencies() {
         createGradleRunner()
-                .withArguments("dependencyComplianceList")
+                .withArguments("dependencyComplianceList", "--stacktrace")
                 .build();
     }
 

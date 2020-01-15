@@ -19,15 +19,15 @@ public class CheckUpdatesTest extends AbstractTest {
 
     @Test
     public void shouldSucceedWithGeneratedReport() {
-        createGradleRunner().withArguments("dependencyComplianceExport").build();
-        BuildResult result = createGradleRunner().withArguments("dependencyComplianceCheck").build();
+        createGradleRunner().withArguments("dependencyComplianceExport", "--stacktrace").build();
+        BuildResult result = createGradleRunner().withArguments("dependencyComplianceCheck", "--stacktrace").build();
         assertThat(result.task(":dependencyComplianceCheck").getOutcome()).isEqualTo(TaskOutcome.SUCCESS);
     }
 
     @Test
     public void shouldReportExistingVersions() throws IOException {
         copyFile("check-updates/report-old.json", "dependency-compliance-report.json");
-        BuildResult result = createGradleRunner().withArguments("dependencyComplianceCheck").buildAndFail();
+        BuildResult result = createGradleRunner().withArguments("dependencyComplianceCheck", "--stacktrace").buildAndFail();
         assertThat(result.task(":dependencyComplianceCheck").getOutcome()).isEqualTo(TaskOutcome.FAILED);
         assertThat(result.getOutput()).contains("Dependencies are not listed in dependency compliance export.");
         assertThat(result.getOutput()).contains("com.google.code.gson:gson:2.8.5 - existing versions: 1.2.3");

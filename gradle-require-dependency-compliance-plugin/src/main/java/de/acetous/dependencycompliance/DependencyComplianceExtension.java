@@ -20,9 +20,9 @@ public class DependencyComplianceExtension {
     private Property<Boolean> ignoreMavenLocal;
 
     public DependencyComplianceExtension(Project project) {
-        outputFile = project.getLayout().fileProperty(project.provider(() -> project.getLayout().getProjectDirectory().file("dependency-compliance-report.json")));
-        ignore = project.getObjects().listProperty(String.class);
-        ignoreMavenLocal = project.getObjects().property(Boolean.class);
+        outputFile = project.getObjects().fileProperty().value(project.getLayout().getProjectDirectory().file("dependency-compliance-report.json"));
+        ignore = project.getObjects().listProperty(String.class).empty();
+        ignoreMavenLocal = project.getObjects().property(Boolean.class).value(false);
     }
 
     public void setOutputFile(RegularFileProperty outputFile) {
