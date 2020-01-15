@@ -207,7 +207,7 @@ workflows:
       - gradle-5.2.1:
           requires:
             - build
-      - gradle-5.3.2:
+      - gradle-5.3.1:
           requires:
             - build
       - gradle-5.4.1:
