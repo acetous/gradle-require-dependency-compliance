@@ -122,9 +122,13 @@ Run your manual tests here. You can change the sandbox project to demonstrate ne
 
 ## Changelog
 
+### Version 2.1.0
+
+* tested with Gradle 6.0.1
+
 ### Version 2.0.0
 
-* compatible with Gradle 5.0
+* compatible with Gradle 5.0 up to 5.6.4
 
 ### Version 1.3.0
 
