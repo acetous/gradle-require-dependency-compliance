@@ -1,24 +1,12 @@
 # Default ignored files
-workspace.xml
-usage.statistics.xml
-tasks.xml
-shelf/
-.name
-artifacts/
-
-*.iml
-modules.xml
-modules/
-gradle.xml
-dictionaries
-libraries
-jarRepositories.xml
-misc.xml
-compiler.xml
-
-datasources.xml
-datasources/
-
-sonarlint/
-sonarlint-state.xml
-sonarlint.xml
+/shelf/
+/workspace.xml
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+/gradle.xml
+/jarRepositories.xml
+/misc.xml
+/sonarlint/
