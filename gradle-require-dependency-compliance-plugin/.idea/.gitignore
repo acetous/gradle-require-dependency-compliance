@@ -1,0 +1,24 @@
+# Default ignored files
+workspace.xml
+usage.statistics.xml
+tasks.xml
+shelf/
+.name
+artifacts/
+
+*.iml
+modules.xml
+modules/
+gradle.xml
+dictionaries
+libraries
+jarRepositories.xml
+misc.xml
+compiler.xml
+
+datasources.xml
+datasources/
+
+sonarlint/
+sonarlint-state.xml
+sonarlint.xml
