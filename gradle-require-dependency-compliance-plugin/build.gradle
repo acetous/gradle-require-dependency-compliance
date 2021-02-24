@@ -14,24 +14,16 @@ file('gradle.d').listFiles().sort().each {
     }
 }
 
-ext {
-    // must be  "major.minor.patch"
-    // or       "major.minor.patch-prerelease"
-    // see http://semver.org/
-    baseVersion = '2.1.1'
-}
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
 group 'de.acetous'
-version = getBuildVersion(baseVersion)
+version = "2.1.2"
 
 gradlePlugin {
     plugins {
         dependencyCompliance {
             id = 'de.acetous.dependency-compliance'
             implementationClass = 'de.acetous.dependencycompliance.DependencyCompliancePlugin'
+            displayName = 'Gradle Dependency Compliance Plugin'
+            description = 'A Gradle plugin to check and track dependencies in your project. Useful for meeting compliance targets, including 3rd-party libraries.'
         }
     }
 }
@@ -39,16 +31,7 @@ gradlePlugin {
 pluginBundle {
     website = 'https://github.com/acetous/gradle-require-dependency-compliance'
     vcsUrl = 'https://github.com/acetous/gradle-require-dependency-compliance.git'
-
-    plugins {
-        dependencyCompliance {
-            id = 'de.acetous.dependency-compliance'
-            displayName = 'Gradle Dependency Compliance Plugin'
-            description = 'A Gradle plugin to check and track dependencies in your project. Useful for meeting compliance targets, including 3rd-party libraries.'
-            tags = ['dependencies', 'compliance']
-            version = getReleaseVersion(baseVersion)
-        }
-    }
+    tags = ['dependencies', 'compliance']
 }
 
 test {

@@ -116,6 +116,10 @@ Run your manual tests here. You can change the sandbox project to demonstrate ne
 
 ## Changelog
 
+### Version 2.1.2
+
+* upd publishing to Gradle Plugin Portal
+
 ### Version 2.1.1
 
 * tested with Gradle 6.8.2
