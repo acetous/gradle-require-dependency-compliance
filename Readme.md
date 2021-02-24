@@ -7,16 +7,10 @@ Checked on Sonarcloud: [![SonarCloud](https://sonarcloud.io/api/project_badges/m
 )](https://sonarcloud.io/dashboard?id=de.acetous%3Agradle-dependency-compliance-plugin) ![Code Coverage](https://sonarcloud.io/api/project_badges/measure?project=de.acetous%3Agradle-dependency-compliance-plugin&metric=coverage)
 
 
-Release 2.x is tested and runs with Gradle 5.0 and 5.1.
-
 | Gradle Version | Latest successfully tested Release |         
 |---|---|
 | 4.8 to 4.10.2 | 1.3.0 |
-| 5.0 to 6.0.1 | 2.1.0 |
-
-
-
-Release 1.3.0 is tested and runs with Gradle 4.8 to 4.10.2.
+| 5.0 to 6.8.2 | 2.2.0 |
 
 ## Usage
 
@@ -121,6 +115,11 @@ Run your manual tests here. You can change the sandbox project to demonstrate ne
 ```
 
 ## Changelog
+
+### Version 2.1.1
+
+* tested with Gradle 6.8.2
+* dependency updates for plugin publishing
 
 ### Version 2.1.0
 
