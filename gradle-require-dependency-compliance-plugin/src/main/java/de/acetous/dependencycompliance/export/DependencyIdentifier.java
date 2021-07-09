@@ -25,9 +25,7 @@ public class DependencyIdentifier {
      * @param moduleVersionIdentifier The {@code ModuleVersionIdentifier} to create this object from.
      */
     public DependencyIdentifier(ModuleVersionIdentifier moduleVersionIdentifier) {
-        group = moduleVersionIdentifier.getGroup();
-        name = moduleVersionIdentifier.getName();
-        version = moduleVersionIdentifier.getVersion();
+        this(moduleVersionIdentifier.getGroup(), moduleVersionIdentifier.getName(), moduleVersionIdentifier.getVersion());
     }
 
     private DependencyIdentifier(String group, String name, String version) {

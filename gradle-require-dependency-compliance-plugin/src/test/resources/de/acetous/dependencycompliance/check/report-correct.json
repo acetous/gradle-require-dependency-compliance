@@ -26,7 +26,7 @@
     },
     {
       "name": "__plugin_repository__Gradle Central Plugin Repository",
-      "url": "https://plugins.gradle.org/"
+      "url": "https://plugins.gradle.org/m2"
     }
   ]
 }

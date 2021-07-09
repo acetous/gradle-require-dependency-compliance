@@ -2,9 +2,12 @@ package de.acetous.dependencycompliance.export;
 
 import com.google.gson.annotations.SerializedName;
 import org.gradle.api.artifacts.repositories.ArtifactRepository;
-import org.gradle.api.artifacts.repositories.IvyArtifactRepository;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
-import org.gradle.api.internal.artifacts.repositories.ArtifactRepositoryInternal;
+import org.gradle.api.artifacts.repositories.UrlArtifactRepository;
+import org.gradle.api.internal.artifacts.repositories.ResolutionAwareRepository;
+import org.gradle.api.internal.artifacts.repositories.descriptor.IvyRepositoryDescriptor;
+import org.gradle.api.internal.artifacts.repositories.descriptor.MavenRepositoryDescriptor;
+import org.gradle.api.internal.artifacts.repositories.descriptor.RepositoryDescriptor;
 
 import java.util.Objects;
 
@@ -26,12 +29,17 @@ public class RepositoryIdentifier {
      */
     public RepositoryIdentifier(ArtifactRepository artifactRepository) {
         name = artifactRepository.getName();
-        if (artifactRepository instanceof MavenArtifactRepository) {
+        if (artifactRepository instanceof UrlArtifactRepository) {
             url = ((MavenArtifactRepository) artifactRepository).getUrl().normalize().toString();
-        } else if (artifactRepository instanceof IvyArtifactRepository) {
-            url = ((IvyArtifactRepository) artifactRepository).getUrl().normalize().toString();
-        } else if (artifactRepository instanceof ArtifactRepositoryInternal) {
-            url = "https://plugins.gradle.org/";
+        } else if (artifactRepository instanceof ResolutionAwareRepository) {
+            RepositoryDescriptor descriptor = ((ResolutionAwareRepository) artifactRepository).getDescriptor();
+            if (descriptor instanceof MavenRepositoryDescriptor) {
+                url = ((MavenRepositoryDescriptor) descriptor).url.normalize().toString();
+            } else if (descriptor instanceof IvyRepositoryDescriptor) {
+                url = ((IvyRepositoryDescriptor) descriptor).url.normalize().toString();
+            } else {
+                throw new IllegalStateException(String.format("ArtifactRepository '%s' of type %s is not supported for Export.", artifactRepository.getName(), artifactRepository.getClass().getName()));
+            }
         } else {
             throw new IllegalStateException(String.format("ArtifactRepository '%s' of type %s is not supported for Export.", artifactRepository.getName(), artifactRepository.getClass().getName()));
         }

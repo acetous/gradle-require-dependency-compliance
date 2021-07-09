@@ -76,7 +76,7 @@ public class FilteredExportTest extends AbstractTest {
         Collection<RepositoryIdentifier> repositories = dependencyExport.getBuildRepositories();
         assertThat(repositories).hasSize(2);
         repositories.forEach(repositoryIdentifier -> {
-            assertThat(repositoryIdentifier.getUrl()).isIn("https://repo.maven.apache.org/maven2/", "https://plugins.gradle.org/");
+            assertThat(repositoryIdentifier.getUrl()).isIn("https://repo.maven.apache.org/maven2/", "https://plugins.gradle.org/m2");
         });
     }
 
