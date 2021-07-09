@@ -72,7 +72,7 @@ public class CheckTest extends AbstractTest {
         copyFile("check/report-missing-build-repository.json", "dependency-compliance-report.json");
         BuildResult result = createGradleRunner().withArguments("dependencyComplianceCheck", "--stacktrace").buildAndFail();
         assertThat(result.task(":dependencyComplianceCheck").getOutcome()).isEqualTo(TaskOutcome.FAILED);
-        assertThat(result.getOutput()).contains("Buildfile repository is not listed in dependency compliance export: '__plugin_repository__Gradle Central Plugin Repository (https://plugins.gradle.org/)'");
+        assertThat(result.getOutput()).contains("Buildfile repository is not listed in dependency compliance export: '__plugin_repository__Gradle Central Plugin Repository (https://plugins.gradle.org/m2)'");
         assertTaskFailSummary(result);
     }
 
