@@ -31,8 +31,8 @@ gradlePlugin {
 pluginBundle {
     website = 'https://github.com/acetous/gradle-require-dependency-compliance'
     vcsUrl = 'https://github.com/acetous/gradle-require-dependency-compliance.git'
-    tags = ['dependencies', 'compliance']
-}
+            tags = ['dependencies', 'compliance']
+    }
 
 test {
     if (project.hasProperty("gradleVersion")) {
