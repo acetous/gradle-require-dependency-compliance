@@ -65,11 +65,19 @@ public class DependencyFilterServiceTest {
         assertThat(testSubject.isIgnored(DependencyIdentifier.create("org", "bac", "4711"), Collections.emptySet())).isFalse();
     }
 
+    @Test
+    public void shouldFilterWithPartialGroup() {
+        assertThat(testSubject.isIgnored(DependencyIdentifier.create("com", "foo", "123"), createDependencyFilter())).isFalse();
+        assertThat(testSubject.isIgnored(DependencyIdentifier.create("com.foo", "bar", "42"), createDependencyFilter())).isFalse();
+        assertThat(testSubject.isIgnored(DependencyIdentifier.create("com.foo.bar", "bac", "4711"), createDependencyFilter())).isTrue();
+    }
+
     private Set<DependencyIdentifier> createDependencyFilter() {
         return new HashSet<>(Arrays.asList(
                 DependencyIdentifier.create("foo", "bar", "123"),
                 DependencyIdentifier.create("org", "baz", "*"),
-                DependencyIdentifier.create("de", "*", "*")
+                DependencyIdentifier.create("de", "*", "*"),
+                DependencyIdentifier.create("com.foo.*", "*", "*")
         ));
     }
 }
