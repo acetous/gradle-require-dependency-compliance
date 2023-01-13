@@ -37,7 +37,7 @@ public class DependencyFilterService {
 
     public boolean isIgnored(DependencyIdentifier dependencyIdentifier, Set<DependencyIdentifier> dependencyFilter) {
         return dependencyFilter.stream() //
-                .anyMatch(ignore -> ignoreMatchesComplete(dependencyIdentifier, ignore) || ignoreWithArtifactWildcardMatchesGroup(dependencyIdentifier, ignore) || ignoreWithVersionWildcardMatchesArtifact(dependencyIdentifier, ignore));
+                .anyMatch(ignore -> ignoreMatchesComplete(dependencyIdentifier, ignore) || ignoreWithArtifactWildcardMatchesGroup(dependencyIdentifier, ignore) || ignoreWithVersionWildcardMatchesArtifact(dependencyIdentifier, ignore) || ignoreWithPartialGroup(dependencyIdentifier, ignore));
     }
 
     private boolean ignoreWithVersionWildcardMatchesArtifact(DependencyIdentifier dependencyIdentifier, DependencyIdentifier ignore) {
@@ -50,5 +50,9 @@ public class DependencyFilterService {
 
     private boolean ignoreMatchesComplete(DependencyIdentifier dependencyIdentifier, DependencyIdentifier ignore) {
         return dependencyIdentifier.equals(ignore);
+    }
+
+    private boolean ignoreWithPartialGroup(DependencyIdentifier dependencyIdentifier, DependencyIdentifier ignore) {
+        return ignore.getVersion().equals("*") && ignore.getName().equals("*") && ignore.getGroup().endsWith("*") && dependencyIdentifier.getGroup().startsWith(ignore.getGroup().substring(0, ignore.getGroup().length()-1));
     }
 }
